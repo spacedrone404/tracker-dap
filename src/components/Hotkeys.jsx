@@ -1,20 +1,6 @@
 // src/components/Hotkeys.jsx
 import { useEffect } from "react";
 
-/**
- * Hotkeys component (no UI)
- *
- * Props:
- * - onPlayPause: () => void    // SPACE
- * - onPrev: () => void         // ArrowLeft
- * - onNext: () => void         // ArrowRight
- * - onShuffle: () => void      // F10
- * - onLoop: () => void         // F11
- * - onVolumeUp: () => void     // "+"  (NumpadAdd, Shift+=, or '+')
- * - onVolumeDown: () => void   // "-"  (NumpadSubtract, '-' )
- *
- * Usage: <Hotkeys onPlayPause={handlePlayPause} onPrev={handlePrev} ... />
- */
 export default function Hotkeys({
   onPlayPause,
   onPrev,

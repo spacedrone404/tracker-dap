@@ -1,6 +1,6 @@
 {
   "name": "tracker-music-web-player",
-  "version": "0.1.0",
+  "version": "0.8.4",
   "homepage": "https://spacedrone404.github.io/tracker-dap",
   "private": true,
   "dependencies": {
