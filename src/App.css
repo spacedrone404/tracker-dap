@@ -15,10 +15,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-image: var(
-    --backdrop-url,
-    url(`{${process.env.PUBLIC_URL}/Pix/backdrops/backdrop-1.png}`)
-  );
+  background-image: var(--backdrop-url, url("Pix/backdrops/backdrop-1.png"));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
