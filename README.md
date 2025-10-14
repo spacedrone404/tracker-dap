@@ -1,3 +1,20 @@
+
+THINGS TODO
+
+► music playback do not work after deployment
+[see below for explanation]
+► full playlist support
+► off load some functions to components
+► implement ALT + Q hotkey for exit
+► mobile version?
+[maybe someday, if i have spare time]
+► …. stuff …. stuff …. stufff
+► TBD
+
+
+####################################
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
