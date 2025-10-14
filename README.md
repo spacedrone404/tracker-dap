@@ -2,6 +2,9 @@
 Audio player is relying on [chiptune3.js] and [openMPT] libraries
 to handle such a large task to support so many music formats. 
 
+Read more here:
+https://trackerninja.codeberg.page/post/track-or-die-94-react-web-application-to-play-classic-tracker-music/
+
 ESSENTIAL FEATURES
 
 ► the most raddest tracker music on the entire interwebs
