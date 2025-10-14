@@ -814,7 +814,7 @@ export default function App() {
             <h1>
               <a
                 className="logo-text"
-                href="{PUBLIC_URL}"
+                href={PUBLIC_URL}
                 title="Home! ♫ Party like it is 1994!"
               >
                 TrackOrDie'94

@@ -162,7 +162,7 @@ function PowerSwitchInner(props, ref) {
     >
       <div style={{ position: "relative", width: "100%", display: "block" }}>
         <img
-          src={PUBLIC_URL + "/pix/power-off/power-switch-on.png"}
+          src={`${PUBLIC_URL}/pix/power-off/power-switch-on.png`}
           alt="Power switch on"
           draggable={false}
           style={{
