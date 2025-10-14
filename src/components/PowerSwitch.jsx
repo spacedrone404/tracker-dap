@@ -7,15 +7,15 @@ import React, {
   forwardRef,
 } from "react";
 
-//Deploy path helper on resources like Github
-const PUBLIC_URL = process.env.PUBLIC_URL || "";
-
 /**
  * PowerSwitch
  * - Crossfades images and performs existing behavior.
  * - Exposes `trigger()` via ref so parent can programmatically activate it.
  */
 function PowerSwitchInner(props, ref) {
+  //Deploy path helper on resources like Github
+  const PUBLIC_URL = process.env.PUBLIC_URL || "";
+
   const audioRef = useRef(null);
   const [pressed, setPressed] = useState(false);
   const [isBodyAnimating, setIsBodyAnimating] = useState(false);
