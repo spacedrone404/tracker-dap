@@ -8,11 +8,11 @@ export default function BackdropPicker() {
 
     let chosen;
     if (randomNumber < 0.33) {
-      chosen = `${process.env.PUBLIC_URL}/Pix/backdrops/backdrop-1.png`;
+      chosen = "/Pix/backdrops/backdrop-1.png";
     } else if (randomNumber >= 0.33 && randomNumber < 0.66) {
-      chosen = `${process.env.PUBLIC_URL}/Pix/backdrops/backdrop-2.png`;
+      chosen = "/Pix/backdrops/backdrop-2.png";
     } else {
-      chosen = `${process.env.PUBLIC_URL}/Pix/backdrops/backdrop-3.png`;
+      chosen = "/Pix/backdrops/backdrop-3.png";
     }
 
     document.documentElement.style.setProperty(
@@ -23,19 +23,3 @@ export default function BackdropPicker() {
 
   return null;
 }
-
-// export default function BackdropPicker() {
-//   useEffect(() => {
-//     if (typeof document === "undefined") return;
-//     const chosen =
-//       Math.random() < 0.5
-//         ? "/Pix/backdrops/backdrop1.png"
-//         : "/Pix/backdrops/backdrop2.png";
-//     document.documentElement.style.setProperty(
-//       "--backdrop-url",
-//       `url("${chosen}")`
-//     );
-//   }, []);
-
-//   return null;
-// }

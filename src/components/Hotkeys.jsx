@@ -9,6 +9,7 @@ export default function Hotkeys({
   onLoop,
   onVolumeUp,
   onVolumeDown,
+  onPower,
 }) {
   useEffect(() => {
     const isEditableTarget = (target) => {
@@ -25,13 +26,24 @@ export default function Hotkeys({
       if (e.repeat) return;
 
       // ignore when user uses modifier keys (Ctrl/Alt/Meta) — reduces accidental conflicts
-      if (e.ctrlKey || e.altKey || e.metaKey) return;
+      // if (e.ctrlKey || e.altKey || e.metaKey) return;
 
       // ignore when focus is in an editable element
       if (isEditableTarget(e.target)) return;
 
       const code = e.code || "";
       const key = e.key || "";
+
+      // Alt+Q -> power
+      if ((code === "KeyQ" || key === "q" || key === "Q") && e.altKey) {
+        if (typeof onPower === "function") {
+          try {
+            e.preventDefault();
+          } catch {}
+          onPower();
+        }
+        return;
+      }
 
       // SPACE: play/pause
       if (code === "Space" || key === " " || key === "Spacebar") {

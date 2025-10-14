@@ -11,6 +11,9 @@
 # production
 /build
 
+#junk
+/_arc
+
 # misc
 .DS_Store
 .env.local

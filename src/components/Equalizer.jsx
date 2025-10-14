@@ -105,7 +105,7 @@ export default function Equalizer({ playerRef }) {
   }, [playerRef]);
 
   return (
-    <div className="equalizer" title="EQ! How cool is that?">
+    <div className="equalizer" title="EQ! ♪♯♫ How cool is that?">
       <canvas ref={canvasRef} width={120} height={40} />
     </div>
   );

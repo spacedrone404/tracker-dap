@@ -15,7 +15,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-image: var(--backdrop-url, url("Pix/backdrops/backdrop-1.png"));
+  background-image: var(--backdrop-url);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -226,12 +226,6 @@ html {
   right: 0;
 }
 
-.flyout-arrow {
-  font-size: 40px;
-
-  margin-right: 10px;
-}
-
 .mini {
   font-size: 20px;
   color: #c70808;
@@ -269,12 +263,17 @@ html {
 .fly-chip {
   color: #c70808;
   margin-left: 12px;
+  margin-right: 12px;
 }
 
 .fly-mpt {
   color: #004dd3;
+
+  margin-right: 12px;
 }
 .fly-trk {
+  margin-left: 12px;
+  margin-right: 12px;
   color: #00fe00;
 }
 

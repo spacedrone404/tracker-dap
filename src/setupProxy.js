@@ -16,9 +16,6 @@ module.exports = function (app) {
   };
 
   app.get("/libopenmpt.worklet.js", serveWorklet);
-  app.get("/libopenmpt.js", serveWorklet);
-  app.get("/libopenmpt-worklet.js", serveWorklet);
-  app.get("/libopenmpt-worklet", serveWorklet);
 
   // regex route for any /static/media/libopenmpt.worklet* (covers hashed file names)
   app.get(/^\/static\/media\/libopenmpt\.worklet.*$/, serveWorklet);

@@ -24,53 +24,22 @@ const resumeAudioContextIfNeeded = async (maybeCtx) => {
 };
 
 export default function App() {
-  const playlists = [
-    {
-      name: "DEMOSCENE",
-      tracks: [
-        { name: "Moby - Fury Forest", url: "/Music/demoscene/furyforest.mod" },
-        {
-          name: "Firage - Galaxy Hero",
-          url: "/Music/demoscene/galaxyhero.mod",
-        },
-        {
-          name: "Michael - Open Your Heart",
-          url: "/Music/demoscene/heart.mod",
-        },
-        { name: "Alien - Robocop III", url: "/Music/demoscene/robocop3.xm" },
-      ],
-    },
-    {
-      name: "GAMES",
-      tracks: [
-        { name: "BaseHead - Crusader", url: "/Music/games/basehead.s3m" },
-        { name: "Silent Mode - Eternity", url: "/Music/games/eternity.mod" },
-        {
-          name: "Alexander Brandon - Jazz The Jack Rabbit",
-          url: "/Music/games/jazz.s3m",
-        },
-        { name: "C.C.Catch - One Must Fall", url: "/Music/games/omf2097.s3m" },
-      ],
-    },
-    {
-      name: "KEYGEN",
-      tracks: [
-        { name: "Unknown - ST-Style", url: "/Music/keygen/flcstst.xm" },
-        { name: "Dubmood - Lucid", url: "/Music/keygen/lucid.xm" },
-        { name: "FLC - Stargliders", url: "/Music/keygen/stargliders.xm" },
-        { name: "Unknown - Your Dreams", url: "/Music/keygen/yr-dreamz.xm" },
-      ],
-    },
-    {
-      name: "TRANCE",
-      tracks: [
-        { name: "Adnan - Drilling", url: "/Music/trance/driling.it" },
-        { name: "Revisq - Fish, fish ... ", url: "/Music/trance/fish.mod" },
-        { name: "Unknown - I'am My Slave", url: "/Music/trance/slave.xm" },
-        { name: "Mobby - A Trip To Trance", url: "/Music/trance/trip.mod" },
-      ],
-    },
-  ];
+  //Deploy path helper on resources like Github
+  const PUBLIC_URL = process.env.PUBLIC_URL || "";
+
+  useEffect(() => {
+    // PUBLIC_URL is set by CRA build. On GH Pages it's the homepage prefix.
+    const url = process.env.PUBLIC_URL + "/Pix/backdrops/backdrop-1.png";
+    // set on root element (documentElement) or document.body
+    document.documentElement.style.setProperty(
+      "--backdrop-url",
+      `url("${url}")`
+    );
+    // cleanup optional:
+    return () => {
+      document.documentElement.style.removeProperty("--backdrop-url");
+    };
+  }, []);
 
   // UI state
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
@@ -88,16 +57,112 @@ export default function App() {
   const durationRef = useRef(0);
   const progressRef = useRef(0);
   const progressIntervalRef = useRef(null);
-  const clickSoundControls = useRef(new Audio("/Audio/clicks/click-1.mp3"));
-  const clickSoundPlaylist = useRef(new Audio("/Audio/clicks/click-2.mp3"));
-  const startupSound = useRef(new Audio("/Audio/on-off/startup.mp3"));
-  const audioHover = useRef(new Audio("/Audio/side-panel/side-help-open.mp3"));
+
+  // audio
+  const clickSoundControls = useRef(
+    new Audio(PUBLIC_URL + "/Audio/clicks/click-1.mp3")
+  );
+  const clickSoundPlaylist = useRef(
+    new Audio(PUBLIC_URL + "/Audio/clicks/click-2.mp3")
+  );
+  const startupSound = useRef(
+    new Audio(PUBLIC_URL + "/Audio/on-off/startup.mp3")
+  );
+  const audioHover = useRef(
+    new Audio(PUBLIC_URL + "/Audio/side-panel/side-help-open.mp3")
+  );
   const audioUnhover = useRef(
-    new Audio("/Audio/side-panel/side-help-close.mp3")
+    new Audio(PUBLIC_URL + "/Audio/side-panel/side-help-close.mp3")
   );
 
   const handleNextRef = useRef(null);
   const loadingRef = useRef(false);
+
+  const powerSwitchRef = useRef(null);
+
+  const playlists = [
+    {
+      name: "DEMOSCENE",
+      tracks: [
+        {
+          name: "Moby - Fury Forest",
+          url: `${PUBLIC_URL}/Music/demoscene/furyforest.mod`,
+        },
+        {
+          name: "Firage - Galaxy Hero",
+          url: PUBLIC_URL + "/Music/demoscene/galaxyhero.mod",
+        },
+        {
+          name: "Michael - Open Your Heart",
+          url: PUBLIC_URL + "/Music/demoscene/heart.mod",
+        },
+        {
+          name: "Alien - Robocop III",
+          url: PUBLIC_URL + "/Music/demoscene/robocop3.xm",
+        },
+      ],
+    },
+    {
+      name: "GAMES",
+      tracks: [
+        {
+          name: "BaseHead - Crusader",
+          url: PUBLIC_URL + "/Music/games/basehead.s3m",
+        },
+        {
+          name: "Silent Mode - Eternity",
+          url: PUBLIC_URL + "/Music/games/eternity.mod",
+        },
+        {
+          name: "Alexander Brandon - Jazz The Jack Rabbit",
+          url: PUBLIC_URL + "/Music/games/jazz.s3m",
+        },
+        {
+          name: "C.C.Catch - One Must Fall",
+          url: PUBLIC_URL + "/Music/games/omf2097.s3m",
+        },
+      ],
+    },
+    {
+      name: "KEYGEN",
+      tracks: [
+        {
+          name: "Unknown - ST-Style",
+          url: PUBLIC_URL + "/Music/keygen/flcstst.xm",
+        },
+        { name: "Dubmood - Lucid", url: PUBLIC_URL + "/Music/keygen/lucid.xm" },
+        {
+          name: "FLC - Stargliders",
+          url: PUBLIC_URL + "/Music/keygen/stargliders.xm",
+        },
+        {
+          name: "Unknown - Your Dreams",
+          url: PUBLIC_URL + "/Music/keygen/yr-dreamz.xm",
+        },
+      ],
+    },
+    {
+      name: "TRANCE",
+      tracks: [
+        {
+          name: "Adnan - Drilling",
+          url: PUBLIC_URL + "/Music/trance/driling.it",
+        },
+        {
+          name: "Revisq - Fish, fish ... ",
+          url: PUBLIC_URL + "/Music/trance/fish.mod",
+        },
+        {
+          name: "Unknown - I'am My Slave",
+          url: PUBLIC_URL + "/Music/trance/slave.xm",
+        },
+        {
+          name: "Mobby - A Trip To Trance",
+          url: PUBLIC_URL + "/Music/trance/trip.mod",
+        },
+      ],
+    },
+  ];
 
   // synchronous playing ref to avoid race conditions with React state
   const isPlayingRef = useRef(false);
@@ -188,7 +253,7 @@ export default function App() {
             typeof ctx.audioWorklet.addModule === "function"
           ) {
             await ctx.audioWorklet
-              .addModule("/libopenmpt.worklet.js")
+              .addModule(`${PUBLIC_URL}/libopenmpt.worklet.js`)
               .catch(() => {});
           }
         } catch (e) {}
@@ -726,7 +791,11 @@ export default function App() {
   if (showStartup) {
     return (
       <div className="startup startup crt-scanlines crt-flicker crt-colorsep">
-        <img src="/Pix/startup.png" alt="Startup" className="startup-image" />
+        <img
+          src={PUBLIC_URL + "/Pix/startup.png"}
+          alt="Startup"
+          className="startup-image"
+        />
       </div>
     );
   }
@@ -736,12 +805,17 @@ export default function App() {
       <div className="sticky-controls crt-scanlines crt-flicker crt-colorsep">
         <div className="controls-row">
           <div className="player-logo">
-            <img src="./tracker.png" alt="Logo" width="30" height="30" />
+            <img
+              src={PUBLIC_URL + "/tracker.png"}
+              alt="Logo"
+              width="30"
+              height="30"
+            />
             <h1>
               <a
                 className="logo-text"
                 href="/"
-                title="Home! Party like it is 1994!"
+                title="Home! ♫ Party like it is 1994!"
               >
                 TrackOrDie'94
               </a>
@@ -772,6 +846,7 @@ export default function App() {
                   <p className="text-4-slider">Vol</p>
                   <input
                     className="audio-bar"
+                    title="Blow your speakers away! [▲] / [▼]"
                     type="range"
                     min="0"
                     max="100"
@@ -786,10 +861,10 @@ export default function App() {
               <div className="seek-bar-wrap">
                 <div className="position-wrapper">
                   <p className="text-4-slider">Pos</p>
-                  {/* SEEK BAR - user requested this control */}
                   <input
                     className="seek-bar"
                     type="range"
+                    title="Find timing of that groovy piece! [TBD]"
                     min="0"
                     max="1000"
                     value={Math.round(uiProgress * 1000)}
@@ -805,29 +880,29 @@ export default function App() {
               selectedPlaylist ? "visible" : "hidden"
             }`}
           >
-            <button onClick={handlePrev} title="Previous track">
+            <button onClick={handlePrev} title="Previous track [◄]">
               ◄◄
             </button>
             <button
               onClick={handlePlayPause}
-              title="Play/Pause"
+              title="Play/Pause [SPACE]"
               className={isPlayingRef.current ? "playing" : "paused"}
             >
               {isPlayingRef.current ? "II" : "►"}
             </button>
-            <button onClick={handleNext} title="Next track">
+            <button onClick={handleNext} title="Next track [►]">
               ►►
             </button>
             <button
               onClick={handleShuffle}
-              title="Shuffle toggle"
+              title="Shuffle toggle [F10]"
               className={isShuffle ? "on" : "off"}
             >
               {isShuffle ? "≈ On" : "≈ Off"}
             </button>
             <button
               onClick={handleLoop}
-              title="Loop toggle"
+              title="Loop toggle [F11]"
               className={isLoop ? "on" : "off"}
             >
               {isLoop ? "∞ On" : "∞ Off"}
@@ -864,7 +939,12 @@ export default function App() {
             <>
               <div className="playlist-title-puter">
                 <h2>{selectedPlaylist.name}</h2>
-                <img className="puter" src="/pix/puter.svg" width="80" />
+                <img
+                  className="puter"
+                  src={PUBLIC_URL + "/pix/puter.svg"}
+                  alt="Vintage puter"
+                  width="80"
+                />
               </div>
               <ul className="tracks">
                 {selectedPlaylist.tracks.map((track, idx) => (
@@ -944,9 +1024,15 @@ export default function App() {
           onVolumeDown={() =>
             setVolume((v) => Math.max(0, Math.round((v - 0.05) * 100) / 100))
           }
+          onPower={() => {
+            // call the imperative trigger() on PowerSwitch
+            try {
+              powerSwitchRef.current?.trigger?.();
+            } catch (e) {}
+          }}
         />
         <BackdropPicker />
-        <PowerSwitch />
+        <PowerSwitch ref={powerSwitchRef} />
       </div>
       <div
         className="flyout-trigger"
@@ -956,7 +1042,7 @@ export default function App() {
       {/* <p className="flyout-arrow"> ◄</p> */}
       <div className="flyout crt-scanlines crt-flicker crt-colorsep">
         <span className="about">ABOUT APP </span>
-        <p>
+        <p className="flyout-links">
           React-based web application is intended to play tracker music by means
           of
           <a
@@ -964,19 +1050,19 @@ export default function App() {
             href="https://www.npmjs.com/package/chiptune3"
           >
             Chiptune3.js
-          </a>{" "}
-          and{" "}
+          </a>
+          and
+          <br />
           <a
             className="fly-mpt"
             href="https://lib.openmpt.org/libopenmpt/download"
           >
             OpenMPT
-          </a>{" "}
-          libraries. Made by{" "}
+          </a>
+          libraries. Made by
           <a className="fly-trk" href="https://trackerninja.codeberg.page">
-            {" "}
             TrackerNinja
-          </a>{" "}
+          </a>
           in 2025 ©
         </p>
         <br />
@@ -990,6 +1076,7 @@ export default function App() {
           [DOWN] ▀ Volume down <br />
           [F10] ▀ Shuffle toggle <br />
           [F11] ▀ Loop toggle <br />
+          [ALT+Q] ▀ Power off machine <br />
         </p>
       </div>
     </div>
