@@ -1,9 +1,26 @@
 
+ESSENTIAL FEATURES
+
+► the most raddest tracker music on the entire interwebs
+
+► convenient playlist support [loop & shuffle]
+
+► highly ergonomic, no-nonsense in terms of GUI
+
+► shortcut support for better ergo
+
+► stylish startup screen and sound of lovely HDD seeking tracks
+
+► in application kick-butt graphics and audio matching 90s aesthetics
+
+► three cool backdrops: Pro Tracker, Milky Tracker & Impulse tracker [set randomly upon app startup 33% chance]
+
+► animated vintage red computer switch to close the page, if you got bored
+
+
 THINGS TODO
 
 ► music playback do not work after deployment
-
-[see below for explanation]
 
 ► full playlist support
 
@@ -12,8 +29,6 @@ THINGS TODO
 ► implement ALT + Q hotkey for exit
 
 ► mobile version?
-
-[maybe someday, if i have spare time]
 
 ► …. stuff …. stuff …. stufff
 
