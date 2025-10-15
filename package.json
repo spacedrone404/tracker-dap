@@ -1,7 +1,6 @@
 {
   "name": "tracker-music-web-player",
   "version": "0.8.4",
-  "homepage": "https://spacedrone404.github.io/tracker-dap",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
@@ -15,6 +14,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "prebuild": "node copy-worklets.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
