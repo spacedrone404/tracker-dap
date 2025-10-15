@@ -5,7 +5,7 @@ const path = require("path");
 const srcDir = path.join(__dirname, "node_modules", "chiptune3");
 const destDirs = [
   path.join(__dirname, "public"),
-  path.join(__dirname, "media", "static"),
+  path.join(__dirname, "static", "media"),
 ];
 
 // Files to copy
