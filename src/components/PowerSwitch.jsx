@@ -40,7 +40,7 @@ function PowerSwitchInner(props, ref) {
   }, [isBodyAnimating]);
 
   if (!audioRef.current) {
-    audioRef.current = new Audio("/Audio/on-off/power-off.mp3");
+    audioRef.current = new Audio(PUBLIC_URL + "/Audio/on-off/power-off.mp3");
     audioRef.current.preload = "auto";
     audioRef.current.volume = 1.0;
   }
