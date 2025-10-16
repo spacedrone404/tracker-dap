@@ -7,7 +7,15 @@ import BackdropPicker from "./components/BackdropPicker";
 import Equalizer from "./components/Equalizer";
 import "./App.css";
 
-// Resume an AudioContext-like object if suspended (autoplay policy)
+// Constants / module-scope guards
+const ASSETS_CACHE_NAME = "trackerninja-assets-v1";
+if (
+  typeof window !== "undefined" &&
+  window.__TRACKER_ASSETS_PRELOADED == null
+) {
+  window.__TRACKER_ASSETS_PRELOADED = false;
+}
+
 const resumeAudioContextIfNeeded = async (maybeCtx) => {
   try {
     if (!maybeCtx) return;
@@ -24,22 +32,8 @@ const resumeAudioContextIfNeeded = async (maybeCtx) => {
 };
 
 export default function App() {
-  //Deploy path helper on resources like Github
+  // Deploy path helper on resources like Github
   const PUBLIC_URL = process.env.PUBLIC_URL || "";
-
-  useEffect(() => {
-    // PUBLIC_URL is set by CRA build. On GH Pages it's the homepage prefix.
-    const url = process.env.PUBLIC_URL + "/Pix/backdrops/backdrop-1.png";
-    // set on root element (documentElement) or document.body
-    document.documentElement.style.setProperty(
-      "--backdrop-url",
-      `url("${url}")`
-    );
-    // cleanup optional:
-    return () => {
-      document.documentElement.style.removeProperty("--backdrop-url");
-    };
-  }, []);
 
   // UI state
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
@@ -57,29 +51,32 @@ export default function App() {
   const durationRef = useRef(0);
   const progressRef = useRef(0);
   const progressIntervalRef = useRef(null);
-
-  // audio
-  const clickSoundControls = useRef(
-    new Audio(PUBLIC_URL + "/Audio/clicks/click-1.mp3")
-  );
-  const clickSoundPlaylist = useRef(
-    new Audio(PUBLIC_URL + "/Audio/clicks/click-2.mp3")
-  );
-  const startupSound = useRef(
-    new Audio(PUBLIC_URL + "/Audio/on-off/startup.mp3")
-  );
-  const audioHover = useRef(
-    new Audio(PUBLIC_URL + "/Audio/side-panel/side-help-open.mp3")
-  );
-  const audioUnhover = useRef(
-    new Audio(PUBLIC_URL + "/Audio/side-panel/side-help-close.mp3")
-  );
-
-  const handleNextRef = useRef(null);
   const loadingRef = useRef(false);
-
+  const handleNextRef = useRef(null);
   const powerSwitchRef = useRef(null);
 
+  // UI audio refs (do NOT construct with `new Audio(...)` at render time)
+  const clickSoundControls = useRef(null);
+  const clickSoundPlaylist = useRef(null);
+  const startupSound = useRef(null);
+  const audioHover = useRef(null);
+  const audioUnhover = useRef(null);
+
+  // Refs to support sync behaviour
+  const isPlayingRef = useRef(false);
+  const setPlayingState = useCallback((v) => {
+    isPlayingRef.current = v;
+    setIsPlaying(v);
+  }, []);
+
+  const currentTrackIndexRef = useRef(null);
+  const isShuffleRef = useRef(isShuffle);
+  const isLoopRef = useRef(isLoop);
+  const selectedPlaylistRef = useRef(selectedPlaylist);
+  const onTrackEndRef = useRef(null);
+  const pausedPositionRef = useRef(null);
+
+  // playlists data (kept inside component so PUBLIC_URL is available)
   const playlists = [
     {
       name: "DEMOSCENE",
@@ -164,57 +161,6 @@ export default function App() {
     },
   ];
 
-  // synchronous playing ref to avoid race conditions with React state
-  const isPlayingRef = useRef(false);
-  // helper to update both state and ref atomically
-  const setPlayingState = useCallback((v) => {
-    isPlayingRef.current = v;
-    setIsPlaying(v);
-  }, []);
-
-  // stable refs to avoid stale closures inside end handler
-  const currentTrackIndexRef = useRef(null);
-  const isShuffleRef = useRef(isShuffle);
-  const isLoopRef = useRef(isLoop);
-  const selectedPlaylistRef = useRef(selectedPlaylist);
-
-  // ref for the onTrackEnd function so player.endHandler can call latest impl
-  const onTrackEndRef = useRef(null);
-
-  // store paused position when library doesn't support pause/resume properly
-  const pausedPositionRef = useRef(null);
-
-  const playClickSoundControls = () => {
-    try {
-      clickSoundControls.current.currentTime = 0;
-      clickSoundControls.current.play();
-    } catch (e) {}
-  };
-
-  const playClickSoundPlaylist = () => {
-    try {
-      clickSoundPlaylist.current.currentTime = 0;
-      clickSoundPlaylist.current.play();
-    } catch (e) {}
-  };
-
-  // Woosh hover sound for flyout
-  const handleMouseEnter = () => {
-    try {
-      audioHover.current.currentTime = 0;
-      audioHover.current.volume = 0.2;
-      audioHover.current.play();
-    } catch (e) {}
-  };
-
-  const handleMouseLeave = () => {
-    try {
-      audioUnhover.current.currentTime = 0;
-      audioUnhover.current.volume = 0.2;
-      audioUnhover.current.play();
-    } catch (e) {}
-  };
-
   // keep refs in sync with state
   useEffect(() => {
     isShuffleRef.current = isShuffle;
@@ -229,9 +175,153 @@ export default function App() {
     currentTrackIndexRef.current = currentTrackIndex;
   }, [currentTrackIndex]);
   useEffect(() => {
-    // keep boolean ref in sync if setIsPlaying used outside helper
     isPlayingRef.current = isPlaying;
   }, [isPlaying]);
+
+  // UI asset lists for preloading
+  const uiAudioFiles = [
+    "/Audio/clicks/click-1.mp3",
+    "/Audio/clicks/click-2.mp3",
+    "/Audio/on-off/startup.mp3",
+    "/Audio/side-panel/side-help-open.mp3",
+    "/Audio/side-panel/side-help-close.mp3",
+  ].map((p) => PUBLIC_URL + p);
+
+  const pixFiles = ["/Pix/backdrops/backdrop-1.png"].map((p) => PUBLIC_URL + p);
+
+  // Preload assets function (StrictMode-safe)
+  const preloadAssets = useCallback(async () => {
+    if (typeof window === "undefined") return;
+    if (window.__TRACKER_ASSETS_PRELOADED) return;
+    window.__TRACKER_ASSETS_PRELOADED = true;
+
+    try {
+      // 1) Cache UI audio, pix,
+      if ("caches" in window) {
+        const cache = await caches.open(ASSETS_CACHE_NAME);
+        const all = [...uiAudioFiles, ...pixFiles];
+        try {
+          await cache.addAll(all);
+        } catch (e) {
+          // add individually so one bad URL doesn't block everything
+          await Promise.all(
+            all.map(async (u) => {
+              try {
+                await cache.add(u);
+              } catch (err) {
+                // silent warn
+                console.warn("cache.add failed for", u, err);
+              }
+            })
+          );
+        }
+      }
+
+      // 2) Create singleton Audio objects using cached blob if possible
+      async function makeAudio(url) {
+        if ("caches" in window) {
+          try {
+            const cache = await caches.open(ASSETS_CACHE_NAME);
+            const resp = await cache.match(url);
+            if (resp && resp.ok) {
+              const blob = await resp.blob();
+              const blobUrl = URL.createObjectURL(blob);
+              const a = new Audio(blobUrl);
+              a.preload = "auto";
+              try {
+                a.load();
+              } catch (e) {}
+              return { audio: a, blobUrl };
+            }
+          } catch (e) {
+            // fallthrough to direct Audio
+          }
+        }
+        // fallback
+        const a = new Audio(url);
+        a.preload = "auto";
+        try {
+          a.load();
+        } catch (e) {}
+        return { audio: a, blobUrl: null };
+      }
+
+      const [ctrl, pl, st, hover, unhover] = await Promise.all(
+        uiAudioFiles.map((u) =>
+          makeAudio(u).catch((e) => {
+            console.warn("makeAudio failed for", u, e);
+            return { audio: null, blobUrl: null };
+          })
+        )
+      );
+
+      if (ctrl && ctrl.audio) clickSoundControls.current = ctrl.audio;
+      if (pl && pl.audio) clickSoundPlaylist.current = pl.audio;
+      if (st && st.audio) startupSound.current = st.audio;
+      if (hover && hover.audio) audioHover.current = hover.audio;
+      if (unhover && unhover.audio) audioUnhover.current = unhover.audio;
+
+      // Preload images to warm decoder/cache (won't double fetch if cached)
+      pixFiles.forEach((imgUrl) => {
+        const img = new Image();
+        img.src = imgUrl;
+      });
+
+      // Set backdrop CSS var (browser will resolve using cached resource)
+      const backdropUrl = PUBLIC_URL + "/Pix/backdrops/backdrop-1.png";
+      document.documentElement.style.setProperty(
+        "--backdrop-url",
+        `url("${backdropUrl}")`
+      );
+    } catch (e) {
+      console.warn("preloadAssets failed", e);
+    }
+  }, [PUBLIC_URL, uiAudioFiles, pixFiles]);
+
+  // call preload once on mount
+  useEffect(() => {
+    // start preloading (do not await in case it takes time)
+    preloadAssets().catch(() => {});
+  }, [preloadAssets]);
+
+  // helper to play UI sounds safely
+  const playClickSoundControls = () => {
+    try {
+      if (clickSoundControls.current) {
+        clickSoundControls.current.currentTime = 0;
+        clickSoundControls.current.play();
+      }
+    } catch (e) {}
+  };
+
+  const playClickSoundPlaylist = () => {
+    try {
+      if (clickSoundPlaylist.current) {
+        clickSoundPlaylist.current.currentTime = 0;
+        clickSoundPlaylist.current.play();
+      }
+    } catch (e) {}
+  };
+
+  const handleMouseEnter = () => {
+    try {
+      if (audioHover.current) {
+        audioHover.current.currentTime = 0;
+        audioHover.current.volume = 0.2;
+        audioHover.current.play();
+      }
+    } catch (e) {}
+  };
+
+  const handleMouseLeave = () => {
+    try {
+      if (audioUnhover.current) {
+        audioUnhover.current.currentTime = 0;
+        audioUnhover.current.volume = 0.2;
+        audioUnhover.current.play();
+      }
+    } catch (e) {}
+  };
 
   // Init chiptune player
   useEffect(() => {
@@ -259,7 +349,6 @@ export default function App() {
         } catch (e) {}
 
         if (player.current) {
-          // Use onTrackEndRef so the handler always calls the latest onTrackEnd logic
           player.current.endHandler = () => {
             window.requestAnimationFrame(() => {
               if (typeof onTrackEndRef.current === "function")
@@ -287,9 +376,11 @@ export default function App() {
       initPlayer();
     }
 
+    // play startup sound if available (preload ensures it's probably ready)
     try {
-      startupSound.current.play().catch(() => {});
+      if (startupSound.current) startupSound.current.play().catch(() => {});
     } catch (e) {}
+
     const timer = setTimeout(() => setShowStartup(false), 3800);
 
     return () => {
@@ -300,6 +391,7 @@ export default function App() {
       clearTimeout(timer);
       if (progressIntervalRef.current)
         clearInterval(progressIntervalRef.current);
+      // NOTE: if you created blob URLs and want to revoke them on unload, do it here.
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -330,26 +422,21 @@ export default function App() {
     }
   }, []);
 
-  // set current track UI immediately and keep ref in sync
   const setActiveIndexImmediate = useCallback((idx) => {
     currentTrackIndexRef.current = idx;
     setCurrentTrackIndex(idx);
   }, []);
 
-  // Play a specific track (returns a Promise that resolves when playback started)
   const playTrack = useCallback(
     async (index) => {
-      // return a promise that resolves when load callback runs
       return new Promise(async (resolve) => {
         if (!selectedPlaylistRef.current || !player.current || !isReady) {
           resolve(false);
           return;
         }
 
-        // prevent concurrent loads by stopping previous load/play if necessary
         try {
           if (loadingRef.current) {
-            // try to stop previous operations to make way for new load
             try {
               if (typeof player.current.stop === "function")
                 player.current.stop();
@@ -371,26 +458,24 @@ export default function App() {
           return;
         }
 
-        // immediate UI update so button/track highlight is responsive
         setActiveIndexImmediate(index);
-        pausedPositionRef.current = null; // clear paused pos
+        pausedPositionRef.current = null;
 
         await resumeAudioContextIfNeeded(player.current).catch(() => {});
 
         try {
           loadingRef.current = true;
 
-          // stop currently playing buffer to avoid overlap (best-effort)
           try {
             if (typeof player.current.stop === "function")
               player.current.stop();
           } catch (e) {}
 
+          // First try native load(url)
           player.current.load(track.url, (buffer) => {
             loadingRef.current = false;
             currentBufferRef.current = buffer || null;
 
-            // attempt to play/resume using available API
             try {
               if (typeof player.current.play === "function")
                 player.current.play(buffer);
@@ -402,10 +487,8 @@ export default function App() {
               console.warn("play() attempt failed:", e);
             }
 
-            // **use helper to update state + ref**
             setPlayingState(true);
 
-            // read metadata/duration if available
             try {
               const meta =
                 (typeof player.current.metadata === "function" &&
@@ -421,13 +504,12 @@ export default function App() {
             resolve(true);
           });
         } catch (err) {
-          // if load throws, clear loading flag and try fallback fetch path
           loadingRef.current = false;
           console.warn("player.load threw; attempting fetch fallback", err);
 
-          // fallback fetch then load (best-effort)
           try {
             loadingRef.current = true;
+            // fetch should hit the Cache if cached earlier
             const resp = await fetch(track.url);
             const ab = await resp.arrayBuffer();
             player.current.load(ab, (buffer) => {
@@ -439,7 +521,6 @@ export default function App() {
                 else if (typeof player.current.resume === "function")
                   player.current.resume();
               } catch (e) {}
-              // **use helper**
               setPlayingState(true);
               try {
                 const meta =
@@ -463,7 +544,6 @@ export default function App() {
     [isReady, startProgressPolling, setActiveIndexImmediate, setPlayingState]
   );
 
-  // Play / Pause toggle with robust fallback
   const handlePlayPause = useCallback(async () => {
     playClickSoundControls();
     if (!player.current || !isReady) return;
@@ -472,7 +552,6 @@ export default function App() {
 
     const p = player.current;
 
-    // If currently playing -> pause (do NOT change track)
     if (isPlayingRef.current) {
       try {
         if (typeof p.togglePause === "function") {
@@ -480,7 +559,6 @@ export default function App() {
         } else if (typeof p.pause === "function") {
           p.pause();
         } else {
-          // fallback: remember position and stop
           try {
             const pos = typeof p.position === "function" ? p.position() : null;
             if (pos != null) pausedPositionRef.current = pos;
@@ -489,18 +567,13 @@ export default function App() {
             if (typeof p.stop === "function") p.stop();
           } catch (e) {}
         }
-      } catch (e) {
-        /* ignore pause errors */
-      }
-
+      } catch (e) {}
       setPlayingState(false);
       stopProgressPolling();
       return;
     }
 
-    // If not playing -> resume if possible (do NOT start a different track)
     try {
-      // prefer simple togglePause/resume if available
       if (typeof p.togglePause === "function") {
         p.togglePause();
         setPlayingState(true);
@@ -513,16 +586,12 @@ export default function App() {
         startProgressPolling();
         return;
       }
-    } catch (e) {
-      // ignore and try other resume options
-    }
+    } catch (e) {}
 
-    // If a buffer is already loaded, resume/play that buffer (do NOT load another track)
     if (currentBufferRef.current) {
       try {
         if (typeof p.play === "function") p.play(currentBufferRef.current);
         else if (typeof p.start === "function") p.start();
-        // restore paused position if we saved one
         if (pausedPositionRef.current != null) {
           setTimeout(() => {
             try {
@@ -545,13 +614,10 @@ export default function App() {
       }
     }
 
-    // If a load is in progress, do nothing (prevent double-loading/random switching)
     if (loadingRef.current) {
-      // optionally we could set a flag to auto-resume when load finishes, but safer to do nothing
       return;
     }
 
-    // Nothing loaded -> start currentIndex (or random if null). This is the *only* place we call playTrack from pause/resume.
     if (selectedPlaylistRef.current) {
       const idx =
         currentTrackIndexRef.current != null
@@ -571,7 +637,6 @@ export default function App() {
     setPlayingState,
   ]);
 
-  // Next (async; uses currentTrackIndexRef to be consistent)
   const handleNext = useCallback(
     async (ev) => {
       playClickSoundControls();
@@ -594,10 +659,8 @@ export default function App() {
         nextIndex = cur == null ? 0 : (cur + 1) % len;
       }
 
-      // immediate UI change
       setActiveIndexImmediate(nextIndex);
 
-      // if reached end and loop disabled and not shuffle => stop
       if (!isLoopRef.current && !isShuffleRef.current && cur === len - 1) {
         try {
           if (typeof player.current.stop === "function") player.current.stop();
@@ -607,7 +670,6 @@ export default function App() {
         return;
       }
 
-      // Ensure any current play is stopped before loading new track (best-effort)
       try {
         if (loadingRef.current && typeof player.current.stop === "function") {
           player.current.stop();
@@ -615,13 +677,11 @@ export default function App() {
         }
       } catch (e) {}
 
-      // Await the play operation so audio follows UI
       await playTrack(nextIndex);
     },
     [playTrack, setActiveIndexImmediate, stopProgressPolling, setPlayingState]
   );
 
-  // Prev (async; uses currentTrackIndexRef)
   const handlePrev = useCallback(
     async (ev) => {
       playClickSoundControls();
@@ -657,7 +717,6 @@ export default function App() {
     [playTrack, setActiveIndexImmediate, stopProgressPolling, setPlayingState]
   );
 
-  // keep ref for endHandler compatibility if other code references handleNextRef
   handleNextRef.current = handleNext;
 
   const handleShuffle = useCallback(() => {
@@ -669,7 +728,6 @@ export default function App() {
     setIsLoop((l) => !l);
   }, []);
 
-  // onTrackEnd chooses next track using same rules and continues playback
   const onTrackEnd = useCallback(() => {
     const cur = currentTrackIndexRef.current;
     const pl = selectedPlaylistRef.current;
@@ -677,7 +735,6 @@ export default function App() {
     const len = pl.tracks.length;
     if (len === 0) return;
 
-    // If shuffle: pick a random (avoid same track when possible)
     if (isShuffleRef.current) {
       let nextIndex = 0;
       if (len === 1) nextIndex = 0;
@@ -689,12 +746,10 @@ export default function App() {
         } while (nextIndex === cur && tries < 8);
       }
       setActiveIndexImmediate(nextIndex);
-      // fire-and-forget (playTrack returns a promise). No need to await here.
       playTrack(nextIndex);
       return;
     }
 
-    // Not shuffle => move to next sequential track
     if (cur == null) {
       setActiveIndexImmediate(0);
       playTrack(0);
@@ -708,15 +763,12 @@ export default function App() {
       return;
     }
 
-    // cur is last track
     if (isLoopRef.current) {
-      // wrap around
       setActiveIndexImmediate(0);
       playTrack(0);
       return;
     }
 
-    // reached end, no loop and not shuffle -> stop playback
     try {
       if (typeof player.current.stop === "function") player.current.stop();
     } catch (e) {}
@@ -729,12 +781,10 @@ export default function App() {
     setPlayingState,
   ]);
 
-  // keep onTrackEndRef updated with latest implementation
   useEffect(() => {
     onTrackEndRef.current = onTrackEnd;
   }, [onTrackEnd]);
 
-  // When playlist selected, autoplay random track and continue
   useEffect(() => {
     if (selectedPlaylist && isReady) {
       const idx = Math.floor(Math.random() * selectedPlaylist.tracks.length);
@@ -743,7 +793,7 @@ export default function App() {
     }
   }, [selectedPlaylist, isReady, playTrack, setActiveIndexImmediate]);
 
-  // UI re-render for progress updates
+  // UI progress re-render
   const [, setTick] = useState(0);
   useEffect(() => {
     const handler = () => setTick((t) => (t + 1) % 1000000);
@@ -752,9 +802,7 @@ export default function App() {
       window.removeEventListener("chiptune-progress-update", handler);
   }, []);
 
-  // Seek (0..1) — update UI immediately and call available API methods
   const handleSeek = (ratio) => {
-    // immediate UI
     progressRef.current = ratio;
     window.dispatchEvent(new CustomEvent("chiptune-progress-update"));
 
@@ -767,14 +815,12 @@ export default function App() {
         player.current.seek(seconds);
       else if (typeof player.current.set_position === "function")
         player.current.set_position(seconds);
-      // update pausedPosition as well so if paused and user seeks, resume will use new pos
       pausedPositionRef.current = seconds;
     } catch (e) {
       console.warn("seek failed", e);
     }
   };
 
-  // volume handling
   useEffect(() => {
     if (player.current && isReady) {
       try {
@@ -1025,7 +1071,6 @@ export default function App() {
             setVolume((v) => Math.max(0, Math.round((v - 0.05) * 100) / 100))
           }
           onPower={() => {
-            // call the imperative trigger() on PowerSwitch
             try {
               powerSwitchRef.current?.trigger?.();
             } catch (e) {}
@@ -1039,7 +1084,6 @@ export default function App() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       />
-      {/* <p className="flyout-arrow"> ◄</p> */}
       <div className="flyout crt-scanlines crt-flicker crt-colorsep">
         <span className="about">ABOUT APP </span>
         <p className="flyout-links">
