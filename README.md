@@ -1,5 +1,6 @@
 
 Web music player of vintage tracker music is relying on [chiptune3.js](https://www.npmjs.com/package/chiptune3) and [openMPT](https://lib.openmpt.org/libopenmpt/download/) libraries
+<br>
 to handle such a large task to support so many music formats. 
 
 Read more here:
