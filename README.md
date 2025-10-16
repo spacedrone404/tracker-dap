@@ -1,8 +1,10 @@
 
 Web music player of vintage tracker music is relying on [chiptune3.js](https://www.npmjs.com/package/chiptune3) and [openMPT](https://lib.openmpt.org/libopenmpt/download/) libraries
+<br>
 to handle such a large task to support so many music formats. 
 
 Read more here:
+<br>
 https://trackerninja.codeberg.page/post/track-or-die-94-react-web-application-to-play-classic-tracker-music/
 
 <br>
@@ -34,8 +36,6 @@ THINGS TODO
 ► full playlist support
 
 ► off load some functions to components
-
-► implement ALT + Q hotkey for exit
 
 ► mobile version?
 
