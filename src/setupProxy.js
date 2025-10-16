@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = function (app) {
-  const workletFile = path.join(__dirname, "/libopenmpt.worklet.js");
+  const workletFile = path.join(__dirname, "../public/libopenmpt.worklet.js");
 
   const serveWorklet = (req, res) => {
     // Force correct JS MIME so browser won't block with nosniff

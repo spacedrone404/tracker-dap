@@ -253,7 +253,7 @@ export default function App() {
             typeof ctx.audioWorklet.addModule === "function"
           ) {
             await ctx.audioWorklet
-              .addModule(PUBLIC_URL + "/libopenmpt.worklet.js")
+              .addModule(`${PUBLIC_URL}/libopenmpt.worklet.js`)
               .catch(() => {});
           }
         } catch (e) {}
