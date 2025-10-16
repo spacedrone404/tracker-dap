@@ -37,8 +37,6 @@ THINGS TODO
 
 ► off load some functions to components
 
-► implement ALT + Q hotkey for exit
-
 ► mobile version?
 
 ► …. stuff …. stuff …. stufff
