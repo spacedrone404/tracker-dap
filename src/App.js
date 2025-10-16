@@ -802,6 +802,8 @@ export default function App() {
 
   return (
     <div className="app flex crt-scanlines crt-flicker crt-colorsep">
+      <div id="scrollPath"></div>
+      <div id="progressbar"></div>
       <div className="sticky-controls crt-scanlines crt-flicker crt-colorsep">
         <div className="controls-row">
           <div className="player-logo">

@@ -8,7 +8,16 @@ body {
     0 0 15px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.05),
     0 0 30px rgba(255, 255, 255, 0.03), 0 0 40px rgba(255, 255, 255, 0.02),
     0 0 50px rgba(255, 255, 255, 0.01);
+  height: 100vh;
+  overflow-x: hidden !important;
 }
+
+/* @font-face {
+  font-family: "amiga_topaz_unicode_rusRg";
+  src: url("/Fonts/AmigaTopazUnicodeRus.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
 
 body::before {
   content: "";
@@ -37,12 +46,117 @@ body::before {
   font-style: normal;
 }
 
-/* @font-face {
-  font-family: "amiga_topaz_unicode_rusRg";
-  src: url("/Fonts/AmigaTopazUnicodeRus.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-} */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  background-size: 400%;
+  border-radius: 10px;
+  animation: rgbScroll 8s linear infinite;
+  border: 2px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  animation: rgbScroll 2s linear infinite;
+}
+
+@keyframes rgbScroll {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@supports (-moz-appearance: none) {
+  html {
+    scrollbar-width: none;
+  }
+
+  body {
+    -ms-overflow-style: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+#scrollPath {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 100%;
+  background: rgb(255 255 255 / 0.05);
+}
+
+#progressbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 10px;
+  background: linear-gradient(to top, #008aff, #00ffe7);
+  animation: animate 5s linear infinite;
+}
+
+@keyframes animate {
+  0%,
+  100% {
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+#progressbar:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #008aff, #00ffe7);
+  filter: blur(10px);
+}
+
+#progressbar:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #008aff, #00ffe7);
+  filter: blur(30px);
+}
 
 *,
 body,
