@@ -31,8 +31,6 @@ ESSENTIAL FEATURES
 
 THINGS TODO
 
-► music playback do not work after deployment
-
 ► full playlist support
 
 ► off load some functions to components
