@@ -1059,6 +1059,7 @@ export default function App() {
               <a
                 className="introDescription1-link"
                 href="https://mega.nz/file/ml4WlBjT#tPOOhOfVFg9BWwLWGCsHs2CCQ3iTnVysqeWMczJacbM"
+                target="_blank"
               >
                 Download whole music library
               </a>
