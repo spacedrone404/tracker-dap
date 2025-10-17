@@ -975,6 +975,7 @@ html {
   justify-content: flex-end;
   letter-spacing: 3px;
   color: #00ff00;
+  z-index: 90000;
 }
 
 .puter {
