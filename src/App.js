@@ -215,11 +215,11 @@ export default function App() {
 
   // UI asset lists for preloading
   const uiAudioFiles = [
-    PUBLIC_URL + "/Audio/clicks/click-1.mp3",
-    PUBLIC_URL + "/Audio/clicks/click-2.mp3",
-    PUBLIC_URL + "/Audio/on-off/startup.mp3",
-    PUBLIC_URL + "/Audio/side-panel/side-help-open.mp3",
-    PUBLIC_URL + "/Audio/side-panel/side-help-close.mp3",
+    "/Audio/clicks/click-1.mp3",
+    "/Audio/clicks/click-2.mp3",
+    "/Audio/on-off/startup.mp3",
+    "/Audio/side-panel/side-help-open.mp3",
+    "/Audio/side-panel/side-help-close.mp3",
   ].map((p) => PUBLIC_URL + p);
 
   const pixFiles = ["/Pix/backdrops/backdrop-1.png"].map((p) => PUBLIC_URL + p);
