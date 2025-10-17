@@ -1023,7 +1023,7 @@ export default function App() {
                 <h2>{selectedPlaylist.name}</h2>
                 <img
                   className="puter"
-                  src={PUBLIC_URL + "Pix/puter.svg"}
+                  src={PUBLIC_URL + "/Pix/puter.svg"}
                   alt="Vintage puter"
                   width="80"
                 />
