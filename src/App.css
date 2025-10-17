@@ -213,11 +213,11 @@ html {
 /* Fly-out panel */
 .flyout-trigger {
   position: fixed;
-  right: 20px;
+  right: 0;
   top: 0;
   bottom: 0;
-  width: 88px;
-  z-index: 10001;
+  width: 68px;
+  z-index: 90008;
   /* cursor: pointer; */
 }
 
