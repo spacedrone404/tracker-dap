@@ -8,6 +8,7 @@ body {
     0 0 15px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.05),
     0 0 30px rgba(255, 255, 255, 0.03), 0 0 40px rgba(255, 255, 255, 0.02),
     0 0 50px rgba(255, 255, 255, 0.01);
+  height: 180vh;
 }
 
 /* CRT display effect */
@@ -24,6 +25,7 @@ body::before {
   opacity: 0.38;
   image-rendering: pixelated;
   pointer-events: none;
+  height: 180vh;
 }
 
 /* Custom scrollbar */
@@ -267,7 +269,7 @@ html {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  position: absolute;
+  position: fixed;
   bottom: 100px;
   right: 100px;
   animation: daveJump 0.8s ease-in-out infinite alternate;
@@ -361,7 +363,7 @@ html {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 40000;
   background: rgba(20, 20, 20, 0.85);
   padding: 8px 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);

@@ -7,7 +7,7 @@ const ScrollTop = () => {
   const buttonRef = useRef(null);
 
   const handleScroll = () => {
-    if (window.scrollY > 224) {
+    if (window.scrollY > 48) {
       setTimeout(() => setShowButton(true), 800);
     } else {
       setAnimate(false);
@@ -22,7 +22,7 @@ const ScrollTop = () => {
 
   useEffect(() => {
     if (showButton) {
-      setTimeout(() => setAnimate(true), 28);
+      setTimeout(() => setAnimate(true), 224);
     }
   }, [showButton]);
 

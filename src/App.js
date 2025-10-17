@@ -1046,6 +1046,13 @@ export default function App() {
                   </li>
                 ))}
               </ul>
+              <img
+                className="dave"
+                src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
+                alt="Dangerous Dave"
+                title="No Dangerous Daves were harmed during production!"
+                width="204"
+              />
             </>
           ) : (
             <>
