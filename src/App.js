@@ -1060,6 +1060,7 @@ export default function App() {
                 className="introDescription1-link"
                 href="https://mega.nz/file/ml4WlBjT#tPOOhOfVFg9BWwLWGCsHs2CCQ3iTnVysqeWMczJacbM"
                 target="_blank"
+                rel="noreferrer"
               >
                 Download whole music library
               </a>
@@ -1096,6 +1097,13 @@ export default function App() {
                 >
                   Spacedrone808 aka TrackerNinja
                 </a>
+                <img
+                  className="dave"
+                  src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
+                  alt="Dangerous Dave"
+                  title="No Dangerous Daves were harmed during production!"
+                  width="204"
+                />
               </p>
             </>
           )}

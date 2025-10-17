@@ -82,7 +82,9 @@ button:hover,
 .power-switch div,
 .power-switch div:hover,
 .flyout,
-.flyout:hover {
+.flyout:hover,
+.dave,
+.dave:hover {
   cursor: url("../public/Pix/gui/link.png"), auto;
 }
 
@@ -259,6 +261,28 @@ html {
 .flyout:hover {
   transform: translate(0, 42%);
   right: 0;
+}
+
+.dave {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 100px;
+  right: 100px;
+  animation: daveJump 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes daveJump {
+  0% {
+    transform: translate(2px, 3px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(-2x, 0) rotate(2deg);
+  }
+  100% {
+    transform: translateY(2px, 3px) rotate(1deg);
+  }
 }
 
 .mini {
