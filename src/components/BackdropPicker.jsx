@@ -13,9 +13,9 @@ export default function BackdropPicker() {
     if (randomNumber < 0.33) {
       chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-1.png";
     } else if (randomNumber >= 0.33 && randomNumber < 0.66) {
-      chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-2.png";
+      chosen = "/Pix/backdrops/backdrop-2.png";
     } else {
-      chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-3.png";
+      chosen = "/Pix/backdrops/backdrop-3.png";
     }
 
     document.documentElement.style.setProperty(

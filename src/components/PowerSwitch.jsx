@@ -6,6 +6,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from "react";
+import "../App.css";
 
 /**
  * PowerSwitch
@@ -40,7 +41,7 @@ function PowerSwitchInner(props, ref) {
   }, [isBodyAnimating]);
 
   if (!audioRef.current) {
-    audioRef.current = new Audio(PUBLIC_URL + "/Audio/on-off/power-off.mp3");
+    audioRef.current = new Audio("/Audio/on-off/power-off.mp3");
     audioRef.current.preload = "auto";
     audioRef.current.volume = 1.0;
   }
@@ -154,7 +155,7 @@ function PowerSwitchInner(props, ref) {
         bottom: 12,
         left: "50%",
         transform: "translateX(-50%)",
-        zIndex: 12000,
+        zIndex: 40000,
         width: 96,
         cursor: pressed ? "default" : "pointer",
         userSelect: "none",
@@ -162,7 +163,7 @@ function PowerSwitchInner(props, ref) {
     >
       <div style={{ position: "relative", width: "100%", display: "block" }}>
         <img
-          src={process.env.PUBLIC_URL + "/Pix/power-off/power-switch-on.png"}
+          src={PUBLIC_URL + "/Pix/power-off/power-switch-on.png"}
           alt="Power switch on"
           draggable={false}
           style={{
@@ -174,7 +175,7 @@ function PowerSwitchInner(props, ref) {
           }}
         />
         <img
-          src={process.env.PUBLIC_URL + "/Pix/power-off/power-switch-off.png"}
+          src={PUBLIC_URL + "/Pix/power-off/power-switch-off.png"}
           alt="Power switch off"
           draggable={false}
           style={{

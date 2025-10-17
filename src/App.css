@@ -8,16 +8,9 @@ body {
     0 0 15px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.05),
     0 0 30px rgba(255, 255, 255, 0.03), 0 0 40px rgba(255, 255, 255, 0.02),
     0 0 50px rgba(255, 255, 255, 0.01);
-  height: 100vh;
-  overflow-x: hidden !important;
 }
 
-/* @font-face {
-  font-family: "amiga_topaz_unicode_rusRg";
-  src: url("/Fonts/AmigaTopazUnicodeRus.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-} */
+/* CRT display effect */
 
 body::before {
   content: "";
@@ -33,6 +26,16 @@ body::before {
   pointer-events: none;
 }
 
+/* Custom scrollbar */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(2, 255, 44) #1a8445;
+  scroll-behavior: smooth !important;
+}
+
+/* Custom fonts */
+
 @font-face {
   font-family: "Amiga Topaz Unicode Rus";
   src: url("../public/Fonts/AmigaTopazUnicodeRus.woff") format("woff");
@@ -46,125 +49,41 @@ body::before {
   font-style: normal;
 }
 
-::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
+/* @font-face {
+  font-family: "amiga_topaz_unicode_rusRg";
+  src: url("/Fonts/AmigaTopazUnicodeRus.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
 
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
-  );
-  background-size: 400%;
-  border-radius: 10px;
-  animation: rgbScroll 8s linear infinite;
-  border: 2px solid #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  animation: rgbScroll 2s linear infinite;
-}
-
-@keyframes rgbScroll {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@supports (-moz-appearance: none) {
-  html {
-    scrollbar-width: none;
-  }
-
-  body {
-    -ms-overflow-style: none;
-  }
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-#scrollPath {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 10px;
-  height: 100%;
-  background: rgb(255 255 255 / 0.05);
-}
-
-#progressbar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 10px;
-  background: linear-gradient(to top, #008aff, #00ffe7);
-  animation: animate 5s linear infinite;
-}
-
-@keyframes animate {
-  0%,
-  100% {
-    filter: hue-rotate(0deg);
-  }
-
-  50% {
-    filter: hue-rotate(360deg);
-  }
-}
-
-#progressbar:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, #008aff, #00ffe7);
-  filter: blur(10px);
-}
-
-#progressbar:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, #008aff, #00ffe7);
-  filter: blur(30px);
-}
-
+/* Custom cursors */
 *,
 body,
 html,
 ::-webkit-scrollbar,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  cursor: url("../public/Pix/gui/cursor.png"), auto;
+}
+
 a,
-a:hover {
-  cursor: url("../public/Pix/cursor.gif"), auto;
+a:hover,
+button,
+button:hover,
+.left li,
+.left li:hover,
+.tracks li,
+.tracks li:hover,
+.power-switch div,
+.audio-bar,
+.audio-bar:hover,
+.seek-bar,
+.seek-bar:hover,
+.power-switch div,
+.power-switch div:hover,
+.flyout,
+.flyout:hover {
+  cursor: url("../public/Pix/gui/link.png"), auto;
 }
 
 html {
@@ -196,7 +115,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: black;
+  background: #000000;
   z-index: 10002;
 }
 
@@ -261,9 +180,11 @@ html {
   transition: opacity 0.5s ease, filter 0.5s ease;
 }
 
+/* Hidden control buttons on startup page */
 .hidden {
   opacity: 0;
   filter: blur(5px);
+  pointer-events: none;
 }
 
 .visible {
@@ -306,10 +227,10 @@ html {
   top: 0;
   bottom: 0;
   width: 384px;
-  background: rgba(36, 135, 120, 0.78);
+  background: rgba(22, 89, 79, 0.68);
   transform: translate(104%, 42%);
   transition: transform 0.3s ease;
-  z-index: 10000;
+  z-index: 90000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -342,13 +263,25 @@ html {
 
 .mini {
   font-size: 20px;
-  color: #c70808;
+  color: #3480ea;
   text-align: center;
+  margin-bottom: 8px;
 }
 .about {
   font-size: 20px;
-  color: #004dd3;
-  margin-bottom: -20px;
+  color: #c70808;
+  margin-bottom: -18px;
+}
+
+.about-text {
+  display: inline-block;
+  transform: translateY(7px);
+}
+
+.flyout-links,
+.flyout-help {
+  font-size: 16px;
+  margin-top: 25px;
 }
 
 .flyout-help {
@@ -370,18 +303,18 @@ html {
 .fly-chip:hover,
 .fly-mpt:hover,
 .fly-trk:hover {
-  color: #000000;
+  color: #ff7700;
   transition: all 0.3s ease-in-out;
 }
 
 .fly-chip {
-  color: #c70808;
+  color: #10c6ae;
   margin-left: 12px;
   margin-right: 12px;
 }
 
 .fly-mpt {
-  color: #004dd3;
+  color: #8563ff;
 
   margin-right: 12px;
 }
@@ -394,6 +327,9 @@ html {
 .app.flex {
   display: flex;
   margin-top: 50px;
+  @media (width <= 460px) {
+    overflow-x: hidden !important;
+  }
 }
 
 .sticky-controls {
@@ -414,38 +350,127 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 78px;
+  margin-left: 54px;
+  display: flex;
+  @media (width <=460px) {
+    margin-left: 0;
+    width: 100px;
+    flex-direction: column;
+  }
 }
 
 .logo-text {
   text-decoration: none;
   color: #adff2f;
+  @media (width <=460px) {
+    font-size: 20px;
+  }
+}
+
+.logo-pix {
+  image-rendering: pixelated;
 }
 
 .title-container {
   text-align: center;
+  @media (width <= 460px) {
+    text-align: unset;
+  }
 }
 
 .logo-title {
   font-size: 40px;
   width: 404%;
+  z-index: 180000;
+  position: relative;
+  text-shadow: -2px 26px 86px 17px rgba(255, 0, 0, 0.75);
+
+  @media (width <=460px) {
+    width: 100%;
+  }
 }
 
 .title-span {
   transform: translateY(-15px);
   display: inline-block;
+  @media (width <=460px) {
+    display: none;
+  }
 }
 
 .player-logo h1 {
   margin-left: 10px;
   width: 238px;
+  @media (width <=460px) {
+    width: 100px;
+  }
 }
 .controls-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 150px;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 0.32) 0%,
+    rgba(0, 212, 255, 0.44) 85%,
+    rgba(0, 212, 255, 0) 100%
+  );
+  box-shadow: -2px 26px 86px 17px rgba(0, 0, 0, 0.75) inset;
+  margin-top: -5px;
+  margin-bottom: -9px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
 }
+
+.controls-row:after,
+.controls-row:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    265deg,
+    rgba(255, 0, 47, 1) 0%,
+    rgba(20, 75, 204, 1) 53%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.controls-row:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12.5%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(47, 255, 0, 1) 100%
+  );
+  transform: translateX(-80px) translateY(78px) rotate(90deg);
+}
+
+.controls-row:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12.5%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 140, 0, 1) 0%,
+    rgba(255, 0, 47, 1) 100%
+  );
+  transform: translateX(751%) translateY(78px) rotate(90deg);
+}
+
 .controls-left {
   display: flex;
   gap: 4px;
@@ -555,10 +580,26 @@ html {
   animation: fadeInOut 3.8s ease-in-out;
   outline: #ffffff 4px ridge;
   box-shadow: -3px 48px 200px 73px rgba(255, 0, 0, 0.75);
-  margin-top: -90px;
+  position: fixed;
+  left: 0;
+  bottom: 27%;
+  z-index: 10000;
 
   @media (width <= 1280px) {
-    margin-top: 0;
+    bottom: 23%;
+    font-size: 18px;
+  }
+
+  @media (width <= 460px) {
+    position: relative;
+    width: 100% !important;
+    background: #052247b5;
+    /* outline: 400px red groove; */
+    transform: translateX(500px);
+    justify-content: center;
+    left: 0;
+    bottom: 0;
+    padding-bottom: 250px;
   }
 }
 
@@ -607,19 +648,27 @@ html {
   margin-top: 124px;
   flex-basis: 1200px;
   margin-left: 55px;
+
   @media screen and (max-width: 2000px) {
     flex-basis: 1900px;
   }
   @media screen and (max-width: 2560px) {
     flex-basis: 2550px;
   }
+  @media (width <= 1280px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 124px;
+    width: 300px;
+  }
 }
 
 .right {
   flex: 1;
   padding: 20px;
-  padding-top: 50px;
-  padding-right: 50px;
+  padding-left: 200px;
+  padding-right: 150px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -627,37 +676,26 @@ html {
   flex-direction: column;
   animation: fadeInOut 3.8s ease-in-out;
   transition: all 0.4s ease-in-out;
+
+  @media (width <= 460px) {
+  }
 }
 
 .right p {
   display: flex;
   justify-content: center;
 
-  animation-name: moveUpDown;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-@keyframes moveUpDown {
-  0%,
-  100% {
-    transform: translateY(-1px);
+  @media (width <= 1280px) {
+    font-size: 17px;
   }
-  50% {
-    transform: translateY(1px);
-  }
-}
-
-.introDescription1 {
-  margin-top: -37px !important;
 }
 
 .introDescription1,
 .introDescription2,
 .introDescription3,
 .introDescription5,
-.introDescription7 {
+.introDescription7,
+.introDescription1-link {
   width: 800px;
   display: flex;
   justify-content: center;
@@ -665,6 +703,9 @@ html {
   font-size: 24px;
   text-align: center;
   line-height: 1.4;
+  @media (width <= 1280px) {
+    width: 300px;
+  }
 }
 
 .introDescription2 {
@@ -673,6 +714,26 @@ html {
   margin-top: 20px;
   text-shadow: none;
   font-size: 20px;
+  outline: red ridge 4px;
+  padding: 8px;
+  background-color: #fffefe;
+  animation: moveUpDown 1s ease-in-out infinite;
+}
+
+@keyframes moveUpDown {
+  0%,
+  100% {
+    transform: translateY(-1px);
+  }
+  25% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(1px);
+  }
+  75% {
+    transform: translateY(0);
+  }
 }
 
 .introDescription3 {
@@ -689,11 +750,30 @@ html {
   text-decoration-thickness: 4px;
   transition: all 0.4s ease-in-out;
   margin-top: -18px;
+  @media (width <= 1280px) {
+    font-size: 20px;
+  }
 }
 
 .introDescription4 a:hover,
 .introDescription7 a:hover {
-  color: #ff0000;
+  color: #ffffff;
+  transition: all 0.4s ease-in-out;
+}
+
+.introDescription1-link {
+  color: #ff7700;
+  font-size: 25px;
+  text-decoration: underline;
+  text-shadow: none;
+  text-decoration-thickness: 4px;
+  transition: all 0.4s ease-in-out;
+  @media (width <= 1280px) {
+    font-size: 20px;
+  }
+}
+.introDescription1-link:hover {
+  color: #ffffff;
   transition: all 0.4s ease-in-out;
 }
 
@@ -722,7 +802,10 @@ html {
   list-style: none;
   padding: 0;
   outline: #ffffff 4px ridge;
+  z-index: 30000;
+  mix-blend-mode: lighten;
 }
+
 .tracks li {
   padding: 10px;
   margin-bottom: 5px;
@@ -733,7 +816,7 @@ html {
 }
 
 .tracks li:hover {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.8);
   transition: all 0.4s ease-in-out;
 }
 
@@ -754,11 +837,8 @@ html {
 .crt-scanlines::before {
   content: " ";
   display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  position: fixed;
+  inset: 0;
   background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
     linear-gradient(
       90deg,
@@ -771,15 +851,11 @@ html {
   pointer-events: none;
 }
 
-/*This adds a "flickering screen" effect*/
 .crt-flicker::after {
   content: " ";
   display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  position: fixed;
+  inset: 0;
   background: rgba(18, 16, 16, 0.1);
   opacity: 0;
   z-index: 2;
@@ -853,95 +929,42 @@ html {
   }
 }
 
-/*Adds a "color separation flicker" effect to all text*/
 .crt-colorsep {
-  /* animation: textShadow 1.6s infinite; */
+  animation: textShadow 8s infinite;
 }
 
 @keyframes textShadow {
   0% {
-    text-shadow: 0.4389924193300864px 0 1px rgba(0, 30, 255, 0.5),
-      -0.4389924193300864px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    text-shadow: 0.439px 0 1px rgba(0, 30, 255, 0.3),
+      -0.439px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
   }
-  5% {
-    text-shadow: 2.7928974010788217px 0 1px rgba(0, 30, 255, 0.5),
-      -2.7928974010788217px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  10% {
-    text-shadow: 0.02956275843481219px 0 1px rgba(0, 30, 255, 0.5),
-      -0.02956275843481219px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  15% {
-    text-shadow: 0.40218538552878136px 0 1px rgba(0, 30, 255, 0.5),
-      -0.40218538552878136px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  20% {
-    text-shadow: 3.4794037899852017px 0 1px rgba(0, 30, 255, 0.5),
-      -3.4794037899852017px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+  12.5% {
+    text-shadow: 2.7929px 0 1px rgba(0, 30, 255, 0.3),
+      -2.7929px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
   }
   25% {
-    text-shadow: 1.6125630401149584px 0 1px rgba(0, 30, 255, 0.5),
-      -1.6125630401149584px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    text-shadow: 0.0296px 0 1px rgba(0, 30, 255, 0.3),
+      -0.0296px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
   }
-  30% {
-    text-shadow: 0.7015590085143956px 0 1px rgba(0, 30, 255, 0.5),
-      -0.7015590085143956px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  35% {
-    text-shadow: 3.896914047650351px 0 1px rgba(0, 30, 255, 0.5),
-      -3.896914047650351px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  40% {
-    text-shadow: 3.896914047650351px 0 1px rgba(0, 30, 255, 0.5),
-      -3.896914047650351px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  45% {
-    text-shadow: 2.231056963361899px 0 1px rgba(0, 30, 255, 0.5),
-      -2.231056963361899px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+  37.5% {
+    text-shadow: 0.4022px 0 1px rgba(0, 30, 255, 0.3),
+      -0.4022px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
   }
   50% {
-    text-shadow: 0.08084290417898504px 0 1px rgba(0, 30, 255, 0.5),
-      -0.08084290417898504px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    text-shadow: 3.4794px 0 1px rgba(0, 30, 255, 0.3),
+      -3.4794px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
   }
-  55% {
-    text-shadow: 2.3758461067427543px 0 1px rgba(0, 30, 255, 0.5),
-      -2.3758461067427543px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  60% {
-    text-shadow: 2.202193051050636px 0 1px rgba(0, 30, 255, 0.5),
-      -2.202193051050636px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  65% {
-    text-shadow: 2.8638780614874975px 0 1px rgba(0, 30, 255, 0.5),
-      -2.8638780614874975px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  70% {
-    text-shadow: 0.48874025155497314px 0 1px rgba(0, 30, 255, 0.5),
-      -0.48874025155497314px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+  62.5% {
+    text-shadow: 1.6126px 0 1px rgba(0, 30, 255, 0.3),
+      -1.6126px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
   }
   75% {
-    text-shadow: 1.8948491305757957px 0 1px rgba(0, 30, 255, 0.5),
-      -1.8948491305757957px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  80% {
-    text-shadow: 0.0833037308038857px 0 1px rgba(0, 30, 255, 0.5),
-      -0.0833037308038857px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  85% {
-    text-shadow: 0.09769827255241735px 0 1px rgba(0, 30, 255, 0.5),
-      -0.09769827255241735px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  90% {
-    text-shadow: 3.443339761481782px 0 1px rgba(0, 30, 255, 0.5),
-      -3.443339761481782px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-  }
-  95% {
-    text-shadow: 2.1841838852799786px 0 1px rgba(0, 30, 255, 0.5),
-      -2.1841838852799786px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    text-shadow: 0.7016px 0 1px rgba(0, 30, 255, 0.3),
+      -0.7016px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
   }
   100% {
-    text-shadow: 2.6208764473832513px 0 1px rgba(0, 30, 255, 0.5),
-      -2.6208764473832513px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    text-shadow: 3.8969px 0 1px rgba(0, 30, 255, 0.3),
+      -3.8969px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
   }
 }
 
@@ -959,6 +982,7 @@ html {
     hue-rotate(87deg) brightness(120%) contrast(124%)
     drop-shadow(0 0 6px #05ba05) drop-shadow(0 0 14px #02ae02);
   animation: floating 3s linear infinite alternate;
+  z-index: 30000;
 }
 
 @keyframes floating {
