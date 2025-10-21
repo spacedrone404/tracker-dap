@@ -12,10 +12,12 @@ export default function BackdropPicker() {
     let chosen;
     if (randomNumber < 0.33) {
       chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-1.png";
-    } else if (randomNumber >= 0.33 && randomNumber < 0.66) {
+    } else if (randomNumber >= 0.15 && randomNumber < 0.3) {
       chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-2.png";
-    } else {
+    } else if (randomNumber >= 0.3 && randomNumber < 0.6) {
       chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-3.png";
+    } else {
+      chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-4.png";
     }
 
     document.documentElement.style.setProperty(

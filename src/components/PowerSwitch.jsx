@@ -7,15 +7,20 @@ import React, {
   forwardRef,
 } from "react";
 import "../App.css";
+import "./PowerSwitch.css";
 
 /**
  * PowerSwitch
  * - Crossfades images and performs existing behavior.
  * - Exposes `trigger()` via ref so parent can programmatically activate it.
  */
+
 function PowerSwitchInner(props, ref) {
   //Deploy path helper on resources like Github
   const PUBLIC_URL = process.env.PUBLIC_URL || "";
+
+  const audioHover = new Audio(PUBLIC_URL + "/Audio/hover.mp3");
+  audioHover.volume = 0.2;
 
   const audioRef = useRef(null);
   const [pressed, setPressed] = useState(false);
@@ -144,6 +149,7 @@ function PowerSwitchInner(props, ref) {
       title="Turns off tracker machine, closes page & opens web search! [ALT+Q]"
       tabIndex={0}
       onClick={handleClick}
+      onMouseEnter={() => audioHover.play()}
       onKeyDown={(e) => {
         if ((e.key === "Enter" || e.key === " ") && !pressed) {
           e.preventDefault();

@@ -55,6 +55,7 @@ export default function App() {
   const loadingRef = useRef(false);
   const handleNextRef = useRef(null);
   const powerSwitchRef = useRef(null);
+  const playlistTabsRef = useRef(null);
 
   // UI audio refs (do NOT construct with `new Audio(...)` at render time)
   const clickSoundControls = useRef(null);
@@ -62,6 +63,31 @@ export default function App() {
   const startupSound = useRef(
     new Audio(PUBLIC_URL + "/Audio/on-off/startup.mp3")
   );
+
+  const daveOnHoverSound = new Audio(
+    PUBLIC_URL + "/Audio/8bit/arcade-blip-2.mp3"
+  );
+  const daveOnClickSound = new Audio(
+    PUBLIC_URL + "/Audio/8bit/arcade-blip-1.mp3"
+  );
+
+  const playlistHov = new Audio(PUBLIC_URL + "/Audio/hover.mp3");
+  playlistHov.volume = 0.2;
+
+  daveOnHoverSound.volume = 0.2;
+  daveOnClickSound.volume = 0.2;
+
+  const daveOnHover = () => {
+    daveOnHoverSound.play();
+  };
+  const daveOnClick = () => {
+    daveOnClickSound.play();
+  };
+
+  const playlistHover = () => {
+    playlistHov.play();
+  };
+
   const audioHover = useRef(null);
   const audioUnhover = useRef(null);
 
@@ -195,6 +221,68 @@ export default function App() {
       ],
     },
   ];
+
+  // Coins for poor Dave
+  const Coin = ({ x, y, key }) => {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          left: `${x}%`,
+          top: `${y}%`,
+          zIndex: 2000000,
+        }}
+        className="coin"
+      >
+        $
+      </div>
+    );
+  };
+
+  const [coins, setCoins] = useState([]);
+  const [positionsHistory, setPositionsHistory] = useState([]);
+
+  // Улучшенная генерация координат
+  const generateUniqueRandomPosition = (minDistance = 10) => {
+    while (true) {
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+
+      let isValid = true;
+      positionsHistory.forEach((pos) => {
+        const distance = Math.sqrt(
+          Math.pow(x - pos.x, 2) + Math.pow(y - pos.y, 2)
+        );
+        if (distance < minDistance) {
+          isValid = false;
+        }
+      });
+
+      if (isValid) {
+        return { x, y };
+      }
+    }
+  };
+
+  // Add coins
+  const addCoin = () => {
+    const newPos = generateUniqueRandomPosition();
+    setCoins([...coins, newPos]);
+    setPositionsHistory([...positionsHistory, newPos]); // saving coordinates for better random
+  };
+
+  // Remove coins
+  useEffect(() => {
+    const timeoutIds = coins.map((_, index) =>
+      setTimeout(() => {
+        setCoins((prevCoins) => prevCoins.filter((_, i) => i !== index));
+      }, 800)
+    );
+
+    return () => {
+      timeoutIds.forEach(clearTimeout);
+    };
+  }, [coins]);
 
   // keep refs in sync with state
   useEffect(() => {
@@ -881,6 +969,90 @@ export default function App() {
     );
   }
 
+  // ---------- PlaylistTabs (new small internal component) ----------
+
+  const PlaylistTabs = ({ playlists, selectedPlaylist, onSelect }) => {
+    // ensure active tab is scrolled into view when selected
+    useEffect(() => {
+      if (!playlistTabsRef.current || !selectedPlaylist) return;
+      const el = playlistTabsRef.current.querySelector(
+        `.playlist-tab[data-name="${CSS.escape(selectedPlaylist.name)}"]`
+      );
+      if (el) {
+        // center active tab in small view where possible
+        const parent = playlistTabsRef.current;
+        const parentRect = parent.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+        const offset = el.offsetLeft - (parentRect.width - elRect.width) / 2;
+        parent.scrollTo({
+          left: Math.max(0, offset),
+          behavior: "smooth",
+        });
+      }
+    }, [selectedPlaylist]);
+
+    // keyboard left/right support for accessibility
+    const onKey = (e) => {
+      if (!playlistTabsRef.current) return;
+      if (e.key === "ArrowRight") {
+        playlistTabsRef.current.scrollBy({ left: 120, behavior: "smooth" });
+      } else if (e.key === "ArrowLeft") {
+        playlistTabsRef.current.scrollBy({ left: -120, behavior: "smooth" });
+      }
+    };
+
+    return (
+      <div className="playlist-tabs-wrap" aria-hidden={playlists.length === 0}>
+        <div
+          className="playlist-tabs"
+          ref={playlistTabsRef}
+          tabIndex={0}
+          onKeyDown={onKey}
+        >
+          {playlists.map((pl, idx) => (
+            <button
+              key={idx}
+              data-name={pl.name}
+              className={`playlist-tab ${
+                selectedPlaylist?.name === pl.name ? "active" : ""
+              }`}
+              onClick={() => {
+                playClickSoundPlaylist();
+                onSelect(pl);
+              }}
+              onTouchStart={() => {
+                /* small enhancement: play hover sound on touch */
+                try {
+                  if (audioHover.current) {
+                    audioHover.current.currentTime = 0;
+                    audioHover.current.volume = 0.18;
+                    audioHover.current.play();
+                  }
+                } catch (e) {}
+              }}
+              aria-pressed={selectedPlaylist?.name === pl.name}
+            >
+              {pl.name}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // ---------- JSX: render PlaylistTabs inside sticky-controls (mobile & desktop safe) ----------
+  if (showStartup) {
+    return (
+      <div className="startup startup crt-scanlines crt-flicker crt-colorsep">
+        <img
+          src={PUBLIC_URL + "/Pix/startup.png"}
+          alt="Startup"
+          className="startup-image"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="app flex crt-scanlines crt-flicker crt-colorsep">
       <div className="sticky-controls crt-scanlines crt-flicker crt-colorsep">
@@ -917,11 +1089,13 @@ export default function App() {
             </div>
           )}
 
+          {/* keep your seekbar / controls area as before */}
           <div
             className={`seekbar-wrapper ${
               selectedPlaylist ? "visible" : "hidden"
             }`}
           >
+            {/* ... volume + seek UI unchanged ... */}
             <div className="volume-bar">
               <div className="seek-bar-wrap">
                 <div className="volume-wrapper">
@@ -991,7 +1165,18 @@ export default function App() {
             </button>
           </div>
         </div>
+
+        {/* Insert the swipeable playlist tabs here (desktop will just show them too) */}
+        <PlaylistTabs
+          playlists={playlists}
+          selectedPlaylist={selectedPlaylist}
+          onSelect={(pl) => {
+            setSelectedPlaylist(pl);
+          }}
+        />
       </div>
+
+      {/* rest of your main layout (left + right columns) remains unchanged */}
       <div className="left-right-wrapper">
         <div className="left crt-scanlines crt-flicker crt-colorsep">
           <div className="power-led">
@@ -1008,6 +1193,7 @@ export default function App() {
                   playClickSoundPlaylist();
                   setSelectedPlaylist(pl);
                 }}
+                onMouseEnter={playlistHover}
                 className={selectedPlaylist?.name === pl.name ? "active" : ""}
               >
                 {pl.name}
@@ -1046,13 +1232,23 @@ export default function App() {
                   </li>
                 ))}
               </ul>
+
+              {/* Dangerous Dave */}
               <img
                 className="dave"
                 src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
                 alt="Dangerous Dave"
-                title="No Dangerous Daves were harmed during production!"
+                title="No Dangerous Daves were harmed during production! Click me for powerUp!"
                 width="204"
+                onMouseEnter={daveOnHover}
+                onClick={() => {
+                  daveOnClick(); // Execution of multiple functions
+                  addCoin();
+                }}
               />
+              {coins.map((coin, idx) => (
+                <Coin {...coin} key={idx} />
+              ))}
             </>
           ) : (
             <>
@@ -1060,35 +1256,13 @@ export default function App() {
                 Here you will find all tracker music that were posted on
                 Trackerninja's Tik-Tok channel from 2021 to 2027 wrapped in a
                 nice web GUI app. So, pick your style on the left playlist menu
-                and you are good to go. Currently application is in Alpha test
-                so not so much is available, but things are about to change!
+                and you are good to go.
               </p>
-              <a
-                className="introDescription1-link"
-                href="https://mega.nz/file/ml4WlBjT#tPOOhOfVFg9BWwLWGCsHs2CCQ3iTnVysqeWMczJacbM"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Download whole music library
-              </a>
               <p className="introDescription2">
-                Unblock audio restrictions for this website to fully enjoy it!
-                <br />
-                Compatible with 1280x1024 4:3 aspect ratio monitors.
-                <br />
-                No cell phones are welcomed here.
-              </p>
-              <p className="introDescription3">
-                This lil' project is brought to you by
-              </p>
-              <p className="introDescription4">
-                <a
-                  href="https://trackerninja.codeberg.page"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  trackerninja.codeberg.page
-                </a>
+                UNBLOCK AUDIO RESTRICTIONS FOR THIS WEBSITE TO FULLY ENJOY IT!
+                Tested resolutions: 2560x1600, 1920x1080, 1280x1024. Special
+                layout for mobile devices: viewport width 360px-460px. Other
+                resolutions are not intended. <br /> F#ck round buttons!!!!
               </p>
               <p className="introDescription5">
                 Startup sound: Neo Geo CD startup jingle
@@ -1102,16 +1276,33 @@ export default function App() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Spacedrone808 aka TrackerNinja
+                  SPACEDRONE808 aka TRACKERNINJA
                 </a>
-                <img
-                  className="dave"
-                  src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
-                  alt="Dangerous Dave"
-                  title="No Dangerous Daves were harmed during production!"
-                  width="204"
-                />
+                <br />
+                <a
+                  className="introDescription1-link"
+                  href="https://mega.nz/file/ml4WlBjT#tPOOhOfVFg9BWwLWGCsHs2CCQ3iTnVysqeWMczJacbM"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  DOWNLOAD WHOLE MUSIC LIBRARY
+                </a>
               </p>
+              <img
+                className="dave"
+                src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
+                alt="Dangerous Dave"
+                title="No Dangerous Daves were harmed during production! Click me for powerUp!"
+                width="204"
+                onMouseEnter={daveOnHover}
+                onClick={() => {
+                  daveOnClick(); // Execution of multiple functions
+                  addCoin();
+                }}
+              />
+              {coins.map((coin, idx) => (
+                <Coin {...coin} key={idx} />
+              ))}
             </>
           )}
         </div>
@@ -1138,6 +1329,7 @@ export default function App() {
         <ScrollTop />
         <PowerSwitch ref={powerSwitchRef} />
       </div>
+
       <div
         className="flyout-trigger"
         onMouseEnter={handleMouseEnter}
@@ -1164,7 +1356,7 @@ export default function App() {
           >
             OpenMPT
           </a>
-          libraries. Made by
+          libraries. Proudly brought to you by
           <a className="fly-trk" href="https://trackerninja.codeberg.page">
             TrackerNinja
           </a>
