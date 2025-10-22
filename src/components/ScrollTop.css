@@ -29,7 +29,7 @@ html {
   filter: blur(0);
   pointer-events: auto;
 
-  @media (width <= 460px) {
+  @media (width <= 481px) {
     left: 22px;
   }
 }

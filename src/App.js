@@ -228,8 +228,8 @@ export default function App() {
       <div
         style={{
           position: "absolute",
-          left: `${x}%`,
-          top: `${y}%`,
+          left: `${x}px`,
+          top: `${y}px`,
           zIndex: 2000000,
         }}
         className="coin"
@@ -242,17 +242,20 @@ export default function App() {
   const [coins, setCoins] = useState([]);
   const [positionsHistory, setPositionsHistory] = useState([]);
 
-  // Улучшенная генерация координат
-  const generateUniqueRandomPosition = (minDistance = 10) => {
+  // Generation distance and safe screen margins
+  const generateUniqueRandomPosition = (marginPx = 50, minDistance = 18) => {
+    const windowWidth = window.innerWidth - 2 * marginPx;
+    const windowHeight = window.innerHeight - 2 * marginPx;
+
     while (true) {
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
+      const x = marginPx + Math.random() * windowWidth;
+      const y = marginPx + Math.random() * windowHeight;
 
       let isValid = true;
       positionsHistory.forEach((pos) => {
         const distance = Math.sqrt(
           Math.pow(x - pos.x, 2) + Math.pow(y - pos.y, 2)
-        );
+        ); // Distance delta
         if (distance < minDistance) {
           isValid = false;
         }
@@ -264,14 +267,14 @@ export default function App() {
     }
   };
 
-  // Add coins
+  // Coin add
   const addCoin = () => {
-    const newPos = generateUniqueRandomPosition();
-    setCoins([...coins, newPos]);
-    setPositionsHistory([...positionsHistory, newPos]); // saving coordinates for better random
+    const newPos = generateUniqueRandomPosition(); // Get new position
+    setCoins([...coins, newPos]); // Add coin
+    setPositionsHistory([...positionsHistory, newPos]); // Save position
   };
 
-  // Remove coins
+  // Coin removal
   useEffect(() => {
     const timeoutIds = coins.map((_, index) =>
       setTimeout(() => {
@@ -959,7 +962,7 @@ export default function App() {
 
   if (showStartup) {
     return (
-      <div className="startup startup crt-scanlines crt-flicker crt-colorsep">
+      <div className="startup startup crt-scanlines crt-colorsep">
         <img
           src={PUBLIC_URL + "/Pix/startup.png"}
           alt="Startup"
@@ -1043,7 +1046,7 @@ export default function App() {
   // ---------- JSX: render PlaylistTabs inside sticky-controls (mobile & desktop safe) ----------
   if (showStartup) {
     return (
-      <div className="startup startup crt-scanlines crt-flicker crt-colorsep">
+      <div className="startup startup crt-scanlines crt-colorsep">
         <img
           src={PUBLIC_URL + "/Pix/startup.png"}
           alt="Startup"
@@ -1054,330 +1057,423 @@ export default function App() {
   }
 
   return (
-    <div className="app flex crt-scanlines crt-flicker crt-colorsep">
-      <div className="sticky-controls crt-scanlines crt-flicker crt-colorsep">
-        <div className="controls-row">
-          <div className="player-logo">
-            <img
-              src={PUBLIC_URL + "/tracker.png"}
-              alt="Logo"
-              className="logo-pix"
-              width="50"
-              height="50"
-            />
-            <h1>
-              <a
-                className="logo-text"
-                href={PUBLIC_URL}
-                title="Home! ♫ Party like it is 1994!"
-              >
-                TrackOrDie'94
-              </a>
-            </h1>
-          </div>
-
-          <div className="eq-wrapper">
-            <Equalizer playerRef={player} />
-          </div>
-
-          {!selectedPlaylist && (
-            <div className="title-container">
-              <p className="logo-title crt-flicker crt-sep">
-                <span className="title-span">░▒▓</span> TRACKERNINJA COLLECTION{" "}
-                <span className="title-span"> ▓▒░</span>
-              </p>
-            </div>
-          )}
-
-          {/* keep your seekbar / controls area as before */}
-          <div
-            className={`seekbar-wrapper ${
-              selectedPlaylist ? "visible" : "hidden"
-            }`}
-          >
-            {/* ... volume + seek UI unchanged ... */}
-            <div className="volume-bar">
-              <div className="seek-bar-wrap">
-                <div className="volume-wrapper">
-                  <p className="text-4-slider">Vol</p>
-                  <input
-                    className="audio-bar"
-                    title="Blow your speakers away! [▲] / [▼]"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={Math.round(volume * 100)}
-                    onChange={(e) => setVolume(Number(e.target.value) / 100)}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="progress-and-eq">
-              <div className="seek-bar-wrap">
-                <div className="position-wrapper">
-                  <p className="text-4-slider">Pos</p>
-                  <input
-                    className="seek-bar"
-                    type="range"
-                    title="Find timing of that groovy piece! [TBD]"
-                    min="0"
-                    max="1000"
-                    value={Math.round(uiProgress * 1000)}
-                    onChange={(e) => handleSeek(Number(e.target.value) / 1000)}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className={`controls-left ${
-              selectedPlaylist ? "visible" : "hidden"
-            }`}
-          >
-            <button onClick={handlePrev} title="Previous track [◄]">
-              ◄◄
-            </button>
-            <button
-              onClick={handlePlayPause}
-              title="Play/Pause [SPACE]"
-              className={isPlayingRef.current ? "playing" : "paused"}
-            >
-              {isPlayingRef.current ? "II" : "►"}
-            </button>
-            <button onClick={handleNext} title="Next track [►]">
-              ►►
-            </button>
-            <button
-              onClick={handleShuffle}
-              title="Shuffle toggle [F10]"
-              className={isShuffle ? "on" : "off"}
-            >
-              {isShuffle ? "≈ On" : "≈ Off"}
-            </button>
-            <button
-              onClick={handleLoop}
-              title="Loop toggle [F11]"
-              className={isLoop ? "on" : "off"}
-            >
-              {isLoop ? "∞ On" : "∞ Off"}
-            </button>
-          </div>
-        </div>
-
-        {/* Insert the swipeable playlist tabs here (desktop will just show them too) */}
-        <PlaylistTabs
-          playlists={playlists}
-          selectedPlaylist={selectedPlaylist}
-          onSelect={(pl) => {
-            setSelectedPlaylist(pl);
-          }}
-        />
-      </div>
-
-      {/* rest of your main layout (left + right columns) remains unchanged */}
-      <div className="left-right-wrapper">
-        <div className="left crt-scanlines crt-flicker crt-colorsep">
-          <div className="power-led">
-            POWER LED
-            <div className="led" />
-          </div>
-          <h2>Playlists</h2>
-
-          <ul>
-            {playlists.map((pl, idx) => (
-              <li
-                key={idx}
-                onClick={() => {
-                  playClickSoundPlaylist();
-                  setSelectedPlaylist(pl);
-                }}
-                onMouseEnter={playlistHover}
-                className={selectedPlaylist?.name === pl.name ? "active" : ""}
-              >
-                {pl.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="right">
-          {selectedPlaylist ? (
-            <>
-              <div className="playlist-title-puter">
-                <h2>{selectedPlaylist.name}</h2>
-                <img
-                  className="puter"
-                  src={PUBLIC_URL + "/Pix/puter.svg"}
-                  alt="Vintage puter"
-                  width="80"
-                />
-              </div>
-              <ul className="tracks">
-                {selectedPlaylist.tracks.map((track, idx) => (
-                  <li
-                    key={idx}
-                    onClick={() => {
-                      playClickSoundControls();
-                      setActiveIndexImmediate(idx);
-                      playTrack(idx);
-                    }}
-                    className={currentTrackIndex === idx ? "active" : ""}
-                  >
-                    <span className="track-icon">
-                      {currentTrackIndex === idx ? "►" : ""}
-                    </span>
-                    {track.name}
-                  </li>
-                ))}
-              </ul>
-
-              {/* Dangerous Dave */}
-              <img
-                className="dave"
-                src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
-                alt="Dangerous Dave"
-                title="No Dangerous Daves were harmed during production! Click me for powerUp!"
-                width="204"
-                onMouseEnter={daveOnHover}
-                onClick={() => {
-                  daveOnClick(); // Execution of multiple functions
-                  addCoin();
-                }}
-              />
-              {coins.map((coin, idx) => (
-                <Coin {...coin} key={idx} />
-              ))}
-            </>
-          ) : (
-            <>
-              <p className="introDescription1">
-                Here you will find all tracker music that were posted on
-                Trackerninja's Tik-Tok channel from 2021 to 2027 wrapped in a
-                nice web GUI app. So, pick your style on the left playlist menu
-                and you are good to go.
-              </p>
-              <p className="introDescription2">
-                UNBLOCK AUDIO RESTRICTIONS FOR THIS WEBSITE TO FULLY ENJOY IT!
-                Tested resolutions: 2560x1600, 1920x1080, 1280x1024. Special
-                layout for mobile devices: viewport width 360px-460px. Other
-                resolutions are not intended. <br /> F#ck round buttons!!!!
-              </p>
-              <p className="introDescription5">
-                Startup sound: Neo Geo CD startup jingle
-              </p>
-              <p className="introDescription6">
-                Startup illustration and audio design:
-              </p>
-              <p className="introDescription7">
-                <a
-                  href="https://stock.adobe.com/contributor/204789995/spacedrone808"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  SPACEDRONE808 aka TRACKERNINJA
-                </a>
-                <br />
-                <a
-                  className="introDescription1-link"
-                  href="https://mega.nz/file/ml4WlBjT#tPOOhOfVFg9BWwLWGCsHs2CCQ3iTnVysqeWMczJacbM"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  DOWNLOAD WHOLE MUSIC LIBRARY
-                </a>
-              </p>
-              <img
-                className="dave"
-                src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
-                alt="Dangerous Dave"
-                title="No Dangerous Daves were harmed during production! Click me for powerUp!"
-                width="204"
-                onMouseEnter={daveOnHover}
-                onClick={() => {
-                  daveOnClick(); // Execution of multiple functions
-                  addCoin();
-                }}
-              />
-              {coins.map((coin, idx) => (
-                <Coin {...coin} key={idx} />
-              ))}
-            </>
-          )}
-        </div>
-
-        <Hotkeys
-          onPlayPause={handlePlayPause}
-          onPrev={handlePrev}
-          onNext={handleNext}
-          onShuffle={handleShuffle}
-          onLoop={handleLoop}
-          onVolumeUp={() =>
-            setVolume((v) => Math.min(1, Math.round((v + 0.05) * 100) / 100))
-          }
-          onVolumeDown={() =>
-            setVolume((v) => Math.max(0, Math.round((v - 0.05) * 100) / 100))
-          }
-          onPower={() => {
-            try {
-              powerSwitchRef.current?.trigger?.();
-            } catch (e) {}
-          }}
-        />
-        <BackdropPicker />
-        <ScrollTop />
-        <PowerSwitch ref={powerSwitchRef} />
-      </div>
-
-      <div
-        className="flyout-trigger"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      />
-      <div className="flyout crt-scanlines crt-flicker crt-colorsep">
-        <span className="about">
-          ░▒▓ <span className="about-text">ABOUT APP </span> ▓▒░
-        </span>
-        <p className="flyout-links">
-          React-based web application is intended to play tracker music by means
-          of
-          <a
-            className="fly-chip"
-            href="https://www.npmjs.com/package/chiptune3"
-          >
-            Chiptune3.js
-          </a>
-          and
-          <br />
-          <a
-            className="fly-mpt"
-            href="https://lib.openmpt.org/libopenmpt/download"
-          >
-            OpenMPT
-          </a>
-          libraries. Proudly brought to you by
-          <a className="fly-trk" href="https://trackerninja.codeberg.page">
-            TrackerNinja
-          </a>
-          in 2025 ©
-        </p>
-        <br />
-        <p className="flyout-help">
-          <span className="mini">
-            ░▒▓ <span className="about-text"> MINI HELP </span> ▓▒░
+    <>
+      <div className="unsupported-container crt-scanlines crt-colorsep">
+        <div className="unsupported-text">
+          This web application is intended to run on desktop / laptop in
+          following resolutions: 2560x1600 and more, 1920x1080, 1280x1024. Also
+          it can handle mobile mobile devices with viewport width: 360px -
+          480px. That's quite a range of resolutions to say the least, so choose
+          yours and return.{" "}
+          <span className="testbed">
+            {" "}
+            Also it is a testbed playground for restricting user and showcasing
+            such messages.{" "}
           </span>
-          <br />
-          [SPACE] ▀ Play/Pause <br />
-          [LEFT] ▀ Previous track <br />
-          [RIGHT] ▀ Next track <br />
-          [UP] ▀ Volume up <br />
-          [DOWN] ▀ Volume down <br />
-          [F10] ▀ Shuffle toggle <br />
-          [F11] ▀ Loop toggle <br />
-          [ALT+Q] ▀ Power off machine <br />
-        </p>
+          <span className="home">
+            <a className="home-link" href={PUBLIC_URL}>
+              TAKE ME HOME
+            </a>
+          </span>
+        </div>
+        <img
+          className="dave"
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: -1,
+            opacity: "64%",
+          }}
+          src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
+          alt="Dangerous Dave"
+          title="No Dangerous Daves were harmed during production! Click me for powerUp!"
+          width="204"
+          onMouseEnter={daveOnHover}
+          onClick={() => {
+            daveOnClick(); // Execution of multiple functions
+            addCoin();
+          }}
+        />
+        {coins.map((coin, idx) => (
+          <Coin {...coin} key={idx} />
+        ))}
       </div>
-    </div>
+      <div className="app flex crt-scanlines crt-colorsep">
+        <div className="sticky-controls crt-scanlines crt-colorsep">
+          <div className="controls-row">
+            <div className="player-logo">
+              <img
+                src={PUBLIC_URL + "/tracker.png"}
+                alt="Logo"
+                className="logo-pix"
+                width="50"
+                height="50"
+              />
+              <h1>
+                <a
+                  className="logo-text"
+                  href={PUBLIC_URL}
+                  title="Home! ♫ Party like it is 1994!"
+                >
+                  TrackOrDie'94
+                </a>
+              </h1>
+            </div>
+
+            <div className="eq-wrapper">
+              <Equalizer playerRef={player} />
+            </div>
+
+            {!selectedPlaylist && (
+              <div className="title-container">
+                <p className="logo-title crt-scanlines crt-sep">
+                  <span className="title-span">░▒▓</span> TRACKERNINJA
+                  COLLECTION <span className="title-span"> ▓▒░</span>
+                </p>
+              </div>
+            )}
+
+            {/* keep your seekbar / controls area as before */}
+            <div
+              className={`seekbar-wrapper ${
+                selectedPlaylist ? "visible" : "hidden"
+              }`}
+            >
+              {/* ... volume + seek UI unchanged ... */}
+              <div className="volume-bar">
+                <div className="seek-bar-wrap">
+                  <div className="volume-wrapper">
+                    <p className="text-4-slider">Vol</p>
+                    <input
+                      className="audio-bar"
+                      title="Blow your speakers away! [▲] / [▼]"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={Math.round(volume * 100)}
+                      onChange={(e) => setVolume(Number(e.target.value) / 100)}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="progress-and-eq">
+                <div className="seek-bar-wrap">
+                  <div className="position-wrapper">
+                    <p className="text-4-slider">Pos</p>
+                    <input
+                      className="seek-bar"
+                      type="range"
+                      title="Find timing of that groovy piece! [TBD]"
+                      min="0"
+                      max="1000"
+                      value={Math.round(uiProgress * 1000)}
+                      onChange={(e) =>
+                        handleSeek(Number(e.target.value) / 1000)
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className={`controls-left ${
+                selectedPlaylist ? "visible" : "hidden"
+              }`}
+            >
+              <button onClick={handlePrev} title="Previous track [◄]">
+                ◄◄
+              </button>
+              <button
+                onClick={handlePlayPause}
+                title="Play/Pause [SPACE]"
+                className={isPlayingRef.current ? "playing" : "paused"}
+              >
+                {isPlayingRef.current ? "II" : "►"}
+              </button>
+              <button onClick={handleNext} title="Next track [►]">
+                ►►
+              </button>
+              <button
+                onClick={handleShuffle}
+                title="Shuffle toggle [F10]"
+                className={isShuffle ? "on" : "off"}
+              >
+                {isShuffle ? "≈ On" : "≈ Off"}
+              </button>
+              <button
+                onClick={handleLoop}
+                title="Loop toggle [F11]"
+                className={isLoop ? "on" : "off"}
+              >
+                {isLoop ? "∞ On" : "∞ Off"}
+              </button>
+            </div>
+          </div>
+
+          {/* Insert the swipeable playlist tabs here (desktop will just show them too) */}
+          <PlaylistTabs
+            playlists={playlists}
+            selectedPlaylist={selectedPlaylist}
+            onSelect={(pl) => {
+              setSelectedPlaylist(pl);
+            }}
+          />
+        </div>
+
+        {/* rest of your main layout (left + right columns) remains unchanged */}
+        <div className="left-right-wrapper">
+          <div className="left crt-scanlines crt-colorsep">
+            <div className="power-led">
+              POWER LED
+              <div className="led" />
+            </div>
+            <h2>Playlists</h2>
+
+            <ul>
+              {playlists.map((pl, idx) => (
+                <li
+                  key={idx}
+                  onClick={() => {
+                    playClickSoundPlaylist();
+                    setSelectedPlaylist(pl);
+                  }}
+                  onMouseEnter={playlistHover}
+                  className={selectedPlaylist?.name === pl.name ? "active" : ""}
+                >
+                  {pl.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="right">
+            {selectedPlaylist ? (
+              <>
+                <div className="playlist-title-puter">
+                  <h2>{selectedPlaylist.name}</h2>
+                  <img
+                    className="puter"
+                    src={PUBLIC_URL + "/Pix/puter.svg"}
+                    alt="Vintage puter"
+                    width="80"
+                  />
+                </div>
+                <ul className="tracks">
+                  {selectedPlaylist.tracks.map((track, idx) => (
+                    <li
+                      key={idx}
+                      onClick={() => {
+                        playClickSoundControls();
+                        setActiveIndexImmediate(idx);
+                        playTrack(idx);
+                      }}
+                      className={currentTrackIndex === idx ? "active" : ""}
+                    >
+                      <span className="track-icon">
+                        {currentTrackIndex === idx ? "►" : ""}
+                      </span>
+                      {track.name}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Dangerous Dave */}
+                <img
+                  className="dave"
+                  src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
+                  alt="Dangerous Dave"
+                  title="No Dangerous Daves were harmed during production! Click me for powerUp!"
+                  width="204"
+                  onMouseEnter={daveOnHover}
+                  onClick={() => {
+                    daveOnClick(); // Execution of multiple functions
+                    addCoin();
+                  }}
+                />
+                {coins.map((coin, idx) => (
+                  <Coin {...coin} key={idx} />
+                ))}
+              </>
+            ) : (
+              <>
+                <p className="introDescription1">
+                  Here you will find all tracker music that were posted on
+                  Trackerninja's Tik-Tok channel from 2021 to 2027 wrapped in a
+                  nice web GUI app. So, pick your style on the playlist menu and
+                  you are good to go.
+                </p>
+                <p className="introDescription2">
+                  UNBLOCK AUDIO RESTRICTIONS FOR THIS WEBSITE TO FULLY ENJOY IT!
+                  Tested resolutions: 2560x1600, 1920x1080, 1280x1024. Special
+                  layout for mobile devices: viewport width 360px-480px. Other
+                  resolutions are not intended. <br /> F#ck round buttons!!!!
+                </p>
+                <p className="introDescription5">
+                  Startup sound: Neo Geo CD startup jingle
+                </p>
+                <p className="introDescription6">
+                  Startup illustration and audio design:
+                </p>
+                <p className="introDescription7">
+                  <a
+                    href="https://stock.adobe.com/contributor/204789995/spacedrone808"
+                    target="_blank"
+                    rel="noreferrer"
+                    onMouseEnter={playClickSoundPlaylist}
+                    onClick={daveOnHover}
+                  >
+                    SPACEDRONE808 aka TRACKERNINJA
+                  </a>
+                  <br />
+                  <a
+                    className="introDescription1-link"
+                    href="https://mega.nz/file/ml4WlBjT#tPOOhOfVFg9BWwLWGCsHs2CCQ3iTnVysqeWMczJacbM"
+                    target="_blank"
+                    rel="noreferrer"
+                    onMouseEnter={playClickSoundPlaylist}
+                    onClick={daveOnHover}
+                  >
+                    DOWNLOAD WHOLE MUSIC LIBRARY
+                  </a>
+                </p>
+                <img
+                  className="dave"
+                  src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
+                  alt="Dangerous Dave"
+                  title="No Dangerous Daves were harmed during production! Click me for powerUp!"
+                  width="204"
+                  onMouseEnter={daveOnHover}
+                  onClick={() => {
+                    daveOnClick(); // Execution of multiple functions
+                    addCoin();
+                  }}
+                />
+                {coins.map((coin, idx) => (
+                  <Coin {...coin} key={idx} />
+                ))}
+                <div className="flyout-links-4-mobile">
+                  React-based web application is intended to play tracker music
+                  by means of
+                  <a
+                    className="fly-chip-mob"
+                    href="https://www.npmjs.com/package/chiptune3"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Chiptune3.js
+                  </a>
+                  and
+                  <a
+                    className="fly-mpt-mob"
+                    href="https://lib.openmpt.org/libopenmpt/download"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    OpenMPT
+                  </a>
+                  libraries.
+                  <br />
+                  Proudly brought to you by{" "}
+                  <a
+                    className="fly-trk-mob"
+                    href="https://trackerninja.codeberg.page"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {" "}
+                    TrackerNinja
+                  </a>
+                  in 2025 &copy;
+                </div>
+              </>
+            )}
+          </div>
+
+          <Hotkeys
+            onPlayPause={handlePlayPause}
+            onPrev={handlePrev}
+            onNext={handleNext}
+            onShuffle={handleShuffle}
+            onLoop={handleLoop}
+            onVolumeUp={() =>
+              setVolume((v) => Math.min(1, Math.round((v + 0.05) * 100) / 100))
+            }
+            onVolumeDown={() =>
+              setVolume((v) => Math.max(0, Math.round((v - 0.05) * 100) / 100))
+            }
+            onPower={() => {
+              try {
+                powerSwitchRef.current?.trigger?.();
+              } catch (e) {}
+            }}
+          />
+          <BackdropPicker />
+          <ScrollTop />
+          <PowerSwitch ref={powerSwitchRef} />
+        </div>
+
+        <div
+          className="flyout-trigger"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+        <div className="flyout crt-scanlines crt-colorsep">
+          <span className="about">
+            ░▒▓ <span className="about-text">ABOUT APP </span> ▓▒░
+          </span>
+          <p className="flyout-links">
+            React-based web application is intended to play tracker music by
+            means of
+            <a
+              className="fly-chip"
+              href="https://www.npmjs.com/package/chiptune3"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Chiptune3.js
+            </a>
+            and
+            <br />
+            <a
+              className="fly-mpt"
+              href="https://lib.openmpt.org/libopenmpt/download"
+              target="_blank"
+              rel="noreferrer"
+            >
+              OpenMPT
+            </a>
+            libraries. Proudly brought to you by
+            <a
+              className="fly-trk"
+              href="https://trackerninja.codeberg.page"
+              target="_blank"
+              rel="noreferrer"
+            >
+              TrackerNinja
+            </a>
+            in 2025 ©
+          </p>
+          <br />
+          <p className="flyout-help">
+            <span className="mini">
+              ░▒▓ <span className="about-text"> MINI HELP </span> ▓▒░
+            </span>
+            <br />
+            [SPACE] ▀ Play/Pause <br />
+            [LEFT] ▀ Previous track <br />
+            [RIGHT] ▀ Next track <br />
+            [UP] ▀ Volume up <br />
+            [DOWN] ▀ Volume down <br />
+            [F10] ▀ Shuffle toggle <br />
+            [F11] ▀ Loop toggle <br />
+            [ALT+Q] ▀ Power off machine <br />
+          </p>
+        </div>
+      </div>
+    </>
   );
 }
