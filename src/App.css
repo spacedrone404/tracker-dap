@@ -1366,7 +1366,7 @@ html {
     display: flex;
     /* outline: 40px red groove !important; */
     position: absolute;
-    top: 60px;
+    top: -160px;
     left: 6px;
   }
 
@@ -1458,7 +1458,7 @@ html {
   /* controls compressed */
   .controls-left {
     margin-right: 0;
-    gap: 0;
+    gap: 4px;
     z-index: 100000;
   }
   .controls-left button {
