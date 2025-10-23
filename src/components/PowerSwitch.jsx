@@ -1,4 +1,3 @@
-// src/components/PowerSwitch.jsx
 import React, {
   useRef,
   useState,
@@ -9,10 +8,8 @@ import React, {
 import "../App.css";
 import "./PowerSwitch.css";
 
-/**
- * PowerSwitch
- * - Crossfades images and performs existing behavior.
- * - Exposes `trigger()` via ref so parent can programmatically activate it.
+/* PowerSwitch
+Exposes `trigger()` via ref so parent can programmatically activate it.
  */
 
 function PowerSwitchInner(props, ref) {
@@ -33,7 +30,7 @@ function PowerSwitchInner(props, ref) {
   }, [pressed]);
 
   useEffect(() => {
-    document.body.style.transition = "all 1.9s cubic-bezier(.4,.4,.23,1)";
+    document.body.style.transition = "all 4.4s cubic-bezier(.4,.4,.23,1)";
     if (isBodyAnimating) {
       document.body.style.opacity = "0";
       document.body.style.overflow = "hidden";
@@ -64,7 +61,7 @@ function PowerSwitchInner(props, ref) {
         try {
           window.close();
         } catch (e) {}
-      }, 150);
+      }, 384);
     } catch (e) {}
   };
 
@@ -93,7 +90,7 @@ function PowerSwitchInner(props, ref) {
     // ensure body animation resets after ~2s
     setTimeout(() => {
       setIsBodyAnimating(false);
-    }, 2000);
+    }, 4800);
 
     let finished = false;
     const onEnded = () => {
@@ -114,7 +111,7 @@ function PowerSwitchInner(props, ref) {
         audio.removeEventListener("ended", onEnded);
       } catch (e) {}
       continueAfterSound();
-    }, 2000);
+    }, 4800);
   };
 
   // expose trigger() to parent

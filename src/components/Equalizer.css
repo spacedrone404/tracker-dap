@@ -1,0 +1,21 @@
+.eq-wrapper {
+  width: 128px;
+}
+.equalizer canvas {
+  width: 84%;
+  height: 40px;
+  display: block;
+}
+
+@media (min-width: 359px) and (max-width: 481px) {
+  .eq-wrapper {
+    width: 120px;
+    position: absolute;
+    left: -20px;
+    top: 25px;
+  }
+  .equalizer canvas {
+    margin-left: 45px;
+    /* transform: translateY(14px); */
+  }
+}

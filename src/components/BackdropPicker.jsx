@@ -10,19 +10,20 @@ export default function BackdropPicker() {
     const randomNumber = Math.random();
 
     let chosen;
-    if (randomNumber < 0.33) {
-      chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-1.png";
-    } else if (randomNumber >= 0.15 && randomNumber < 0.3) {
-      chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-2.png";
-    } else if (randomNumber >= 0.3 && randomNumber < 0.6) {
-      chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-3.png";
+
+    if (randomNumber < 0.25) {
+      chosen = `${PUBLIC_URL}/Pix/backdrops/backdrop-1.png`;
+    } else if (randomNumber < 0.5) {
+      chosen = `${PUBLIC_URL}/Pix/backdrops/backdrop-2.png`;
+    } else if (randomNumber < 0.75) {
+      chosen = `${PUBLIC_URL}/Pix/backdrops/backdrop-3.png`;
     } else {
-      chosen = PUBLIC_URL + "/Pix/backdrops/backdrop-4.png";
+      chosen = `${PUBLIC_URL}/Pix/backdrops/backdrop-4.png`;
     }
 
     document.documentElement.style.setProperty(
       "--backdrop-url",
-      `url("${chosen}")`
+      `url('${chosen}')`
     );
   }, []);
 

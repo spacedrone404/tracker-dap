@@ -6,6 +6,9 @@ import PowerSwitch from "./components/PowerSwitch";
 import BackdropPicker from "./components/BackdropPicker";
 import Equalizer from "./components/Equalizer";
 import ScrollTop from "./components/ScrollTop";
+import StarAnimation from "./components/StarAnimation";
+import DimensionsDetector from "./components/DimensionsDetector";
+
 import "./App.css";
 
 // Constants / module-scope guards
@@ -962,7 +965,7 @@ export default function App() {
 
   if (showStartup) {
     return (
-      <div className="startup startup crt-scanlines crt-colorsep">
+      <div className="startup crt-scanlines crt-colorsep">
         <img
           src={PUBLIC_URL + "/Pix/startup.png"}
           alt="Startup"
@@ -1059,6 +1062,7 @@ export default function App() {
   return (
     <>
       <div className="unsupported-container crt-scanlines crt-colorsep">
+        <DimensionsDetector />
         <div className="unsupported-text">
           This web application is intended to run on desktop / laptop in
           following resolutions: 2560x1600 and more, 1920x1080, 1280x1024. Also
@@ -1071,7 +1075,7 @@ export default function App() {
             such messages.{" "}
           </span>
           <span className="home">
-            <a className="home-link" href={PUBLIC_URL}>
+            <a className="home-link" href={PUBLIC_URL} onClick={daveOnClick}>
               TAKE ME HOME
             </a>
           </span>
@@ -1080,9 +1084,9 @@ export default function App() {
           className="dave"
           style={{
             position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            top: "68%",
+            left: "64%",
+            transform: "translate(0, -18%)",
             zIndex: -1,
             opacity: "64%",
           }}
@@ -1117,20 +1121,22 @@ export default function App() {
                   href={PUBLIC_URL}
                   title="Home! ♫ Party like it is 1994!"
                 >
-                  TrackOrDie'94
+                  Track<span className="orRed">Or</span>Die'94
                 </a>
+                <span className="neon-line"></span>
               </h1>
             </div>
 
-            <div className="eq-wrapper">
+            <div className="eq-wrapper crt-scanlines">
               <Equalizer playerRef={player} />
             </div>
 
             {!selectedPlaylist && (
               <div className="title-container">
                 <p className="logo-title crt-scanlines crt-sep">
-                  <span className="title-span">░▒▓</span> TRACKERNINJA
-                  COLLECTION <span className="title-span"> ▓▒░</span>
+                  <span className="title-span">░▒▓</span> TRACKER
+                  <span className="orRed"> NINJA</span> COLLECTION{" "}
+                  <span className="title-span"> ▓▒░</span>
                 </p>
               </div>
             )}
@@ -1180,7 +1186,7 @@ export default function App() {
             </div>
 
             <div
-              className={`controls-left ${
+              className={`controls-left crt-scanlines ${
                 selectedPlaylist ? "visible" : "hidden"
               }`}
             >
@@ -1249,17 +1255,17 @@ export default function App() {
               ))}
             </ul>
           </div>
-
           <div className="right">
             {selectedPlaylist ? (
               <>
                 <div className="playlist-title-puter">
-                  <h2>{selectedPlaylist.name}</h2>
+                  <h1>{selectedPlaylist.name}</h1>
                   <img
                     className="puter"
                     src={PUBLIC_URL + "/Pix/puter.svg"}
                     alt="Vintage puter"
-                    width="80"
+                    width="104"
+                    height="104"
                   />
                 </div>
                 <ul className="tracks">
@@ -1306,7 +1312,14 @@ export default function App() {
                   nice web GUI app. So, pick your style on the playlist menu and
                   you are good to go.
                 </p>
-                <p className="introDescription2">
+                <p
+                  className="introDescription2"
+                  onMouseEnter={daveOnHover}
+                  onClick={() => {
+                    daveOnClick();
+                    addCoin();
+                  }}
+                >
                   UNBLOCK AUDIO RESTRICTIONS FOR THIS WEBSITE TO FULLY ENJOY IT!
                   Tested resolutions: 2560x1600, 1920x1080, 1280x1024. Special
                   layout for mobile devices: viewport width 360px-480px. Other
@@ -1363,6 +1376,7 @@ export default function App() {
                     href="https://www.npmjs.com/package/chiptune3"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={daveOnClick}
                   >
                     Chiptune3.js
                   </a>
@@ -1372,6 +1386,7 @@ export default function App() {
                     href="https://lib.openmpt.org/libopenmpt/download"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={daveOnClick}
                   >
                     OpenMPT
                   </a>
@@ -1383,6 +1398,7 @@ export default function App() {
                     href="https://trackerninja.codeberg.page"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={daveOnHover}
                   >
                     {" "}
                     TrackerNinja
@@ -1392,7 +1408,6 @@ export default function App() {
               </>
             )}
           </div>
-
           <Hotkeys
             onPlayPause={handlePlayPause}
             onPrev={handlePrev}
@@ -1411,7 +1426,10 @@ export default function App() {
               } catch (e) {}
             }}
           />
+
           <BackdropPicker />
+          <DimensionsDetector />
+          <StarAnimation />
           <ScrollTop />
           <PowerSwitch ref={powerSwitchRef} />
         </div>
@@ -1433,6 +1451,7 @@ export default function App() {
               href="https://www.npmjs.com/package/chiptune3"
               target="_blank"
               rel="noreferrer"
+              onClick={daveOnClick}
             >
               Chiptune3.js
             </a>
@@ -1443,6 +1462,7 @@ export default function App() {
               href="https://lib.openmpt.org/libopenmpt/download"
               target="_blank"
               rel="noreferrer"
+              onClick={daveOnClick}
             >
               OpenMPT
             </a>
@@ -1452,6 +1472,7 @@ export default function App() {
               href="https://trackerninja.codeberg.page"
               target="_blank"
               rel="noreferrer"
+              onClick={daveOnHover}
             >
               TrackerNinja
             </a>

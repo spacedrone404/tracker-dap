@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import "./Equalizer.css";
 
 export default function Equalizer({ playerRef }) {
   const canvasRef = useRef(null);

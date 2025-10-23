@@ -10,8 +10,46 @@ body {
     0 0 15px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.05),
     0 0 30px rgba(255, 255, 255, 0.03), 0 0 40px rgba(255, 255, 255, 0.02),
     0 0 50px rgba(255, 255, 255, 0.01);
-  height: 180vh;
+  /* height: 180vh; */
   /* overflow-x: hidden !important; */
+}
+
+.neon-line {
+  display: inline-flex;
+  vertical-align: middle;
+  border-bottom: 2px solid #fff0;
+  animation: neonLineAnimation 4s infinite alternate-reverse both;
+  width: 208px;
+  height: 2px;
+  margin-bottom: 36px;
+  /* margin-bottom: 16px; */
+}
+
+@keyframes neonLineAnimation {
+  0%,
+  100% {
+    border-bottom-color: #fff;
+    box-shadow: inset 0 0 20px #ecfeff, 0 0 10px #9bdaff, 0 0 20px #87ceeb,
+      0 0 30px #7b68ee;
+  }
+
+  25% {
+    border-bottom-color: #ff6eff;
+    box-shadow: inset 0 0 18px #ff80ff, 0 0 10px #ffbaff, 0 0 20px #ff6347,
+      0 0 30px #ba55d3;
+  }
+
+  50% {
+    border-bottom-color: #87cefa;
+    box-shadow: inset 0 0 19px #add8e6, 0 0 10px #b0e0e6, 0 0 20px #7b68ee,
+      0 0 30px #4169e1;
+  }
+
+  75% {
+    border-bottom-color: #b57edc;
+    box-shadow: inset 0 0 21px #dda0dd, 0 0 10px #ee82ee, 0 0 20px #c71585,
+      0 0 30px #db7093;
+  }
 }
 
 .flyout-links-4-mobile {
@@ -21,6 +59,10 @@ body {
 .testbed {
   color: #ff0000;
   margin-bottom: 10px;
+}
+
+.orRed {
+  color: #ff0000;
 }
 
 .home {
@@ -218,6 +260,7 @@ html {
   align-items: center;
   background: #000000;
   z-index: 10002;
+  overflow: hidden;
 }
 
 .startup-image {
@@ -485,6 +528,21 @@ html {
   align-items: center;
   margin-left: 54px;
   display: flex;
+  animation: logoEmerge 0.8s ease-in-out;
+}
+
+@keyframes logoEmerge {
+  from {
+    opacity: 0;
+    filter: blur(28px);
+    transform: translateX(-150%);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+  }
 }
 
 .logo-text {
@@ -506,6 +564,20 @@ html {
   /* z-index: 180000; */
   position: relative;
   text-shadow: -2px 26px 86px 17px rgba(255, 0, 0, 0.75);
+  animation: logoTitleMobile 0.4s ease-in-out;
+}
+
+@keyframes logoTitleMobile {
+  from {
+    opacity: 0;
+    filter: blur(28px);
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
 }
 
 .title-span {
@@ -516,6 +588,7 @@ html {
 .player-logo h1 {
   margin-left: 10px;
   width: 238px;
+  transform: translateY(15px);
 }
 .controls-row {
   display: flex;
@@ -617,6 +690,7 @@ html {
 
 .text-4-slider {
   margin-right: 8px;
+  text-shadow: -1px 4px 10px rgba(0, 255, 94, 0.84);
 }
 
 .seek-bar {
@@ -667,22 +741,12 @@ html {
   height: 24px;
   width: 8px;
   border-radius: 2px;
-  outline: 1px #000000 solid;
+  outline: 2px #f00 solid;
   box-shadow: 0 0 8px rgba(136, 255, 215, 0.8);
-}
-
-.eq-wrapper {
-  width: 128px;
-}
-.equalizer canvas {
-  width: 84%;
-  height: 40px;
-  display: block;
 }
 
 .left {
   width: 200px;
-  background: #052247b5;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
@@ -794,7 +858,7 @@ html {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  font-size: 24px;
+  font-size: 23px;
   text-align: center;
   line-height: 1.4;
   @media (width <= 1280px) {
@@ -811,7 +875,7 @@ html {
   margin-top: 20px;
   text-shadow: none;
   font-size: 20px;
-  outline: red ridge 4px;
+  outline: #ff0000 ridge 4px;
   padding: 8px;
   background-color: #fffefe;
   animation: moveUpDown 1s ease-in-out infinite;
@@ -905,13 +969,16 @@ html {
   padding: 0;
   outline: #ffffff 4px ridge;
   z-index: 30000;
-  mix-blend-mode: lighten;
+  margin-left: 30px;
+  margin-bottom: 150px;
 }
+
+/* Gradient  animation applied on selected track */
 
 .tracks li {
   padding: 10px;
   margin-bottom: 5px;
-  background: rgba(26, 69, 123, 0.88);
+  background: rgba(10, 64, 225, 0.64);
   transition: all 0.4s ease-in-out;
   display: flex;
   align-items: center;
@@ -923,10 +990,60 @@ html {
 }
 
 .tracks li.active {
-  background: rgba(222, 13, 37, 0.8);
+  position: relative;
+  background: linear-gradient(
+    280deg,
+    rgba(255, 0, 0, 0.85) 0%,
+    rgba(20, 197, 224, 0.64) 50%,
+    rgba(70, 253, 29, 0.37) 100%
+  );
+  padding: 14px;
+  border: 4px solid;
+  border-image: linear-gradient(
+      to right,
+      rgb(255, 0, 55),
+      rgb(2, 200, 2),
+      rgb(0, 98, 255)
+    )
+    1;
+
+  --border-size: 4px;
+  border-image-slice: 1;
+  border-width: var(--border-size);
+  border-style: solid;
+  border-color: transparent;
   transition: all 0.4s ease-in-out;
 }
 
+.tracks li.active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: var(--border-size);
+  background: linear-gradient(
+    to right,
+    rgb(255, 0, 55),
+    rgb(2, 200, 2),
+    rgb(0, 98, 255)
+  );
+  background-size: 600% 100%;
+  animation: gradientBorder 10s alternate infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes gradientBorder {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
 .track-icon {
   width: 18px;
   display: inline-block;
@@ -999,7 +1116,61 @@ html {
   justify-content: flex-start;
   letter-spacing: 3px;
   color: #00ff00;
-  z-index: 90000;
+  /* z-index: 90000; */
+}
+
+.playlist-title-puter h1 {
+  position: relative;
+  text-align: center;
+  animation: glitch-shake 8s infinite linear;
+  text-shadow: -1.5px -1px 0 #ff0000, 1.5px 1px 0 rgb(0, 81, 255);
+  transform-origin: center;
+}
+
+@keyframes glitch-shake {
+  0% {
+    transform: translate(0, 0) rotate(0);
+  }
+
+  10% {
+    transform: translate(-1px, 2px) rotate(-0.2deg);
+  }
+
+  20% {
+    transform: translate(2px, -1px) rotate(0.3deg);
+  }
+
+  30% {
+    transform: translate(-2px, -2px) rotate(-0.1deg);
+  }
+
+  40% {
+    transform: translate(1px, 1px) rotate(0.2deg);
+  }
+
+  50% {
+    transform: translate(-1px, -1px) rotate(-0.3deg);
+  }
+
+  60% {
+    transform: translate(2px, 2px) rotate(0.1deg);
+  }
+
+  70% {
+    transform: translate(-2px, 1px) rotate(-0.2deg);
+  }
+
+  80% {
+    transform: translate(1px, -2px) rotate(0.3deg);
+  }
+
+  90% {
+    transform: translate(-1px, 2px) rotate(-0.1deg);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
 }
 
 .puter {
@@ -1008,6 +1179,8 @@ html {
     drop-shadow(0 0 6px #05ba05) drop-shadow(0 0 14px #02ae02);
   animation: floating 3s linear infinite alternate;
   z-index: 30000;
+  width: 80px;
+  height: 80px;
 }
 
 @keyframes floating {
@@ -1038,6 +1211,21 @@ html {
   outline: none;
   box-shadow: -3px 48px 200px 73px rgba(255, 0, 0, 0.75);
   transition: all 0.5s ease-in-out;
+  animation: powerEmerge 0.8s ease-in-out;
+}
+
+@keyframes powerEmerge {
+  from {
+    opacity: 0;
+    filter: blur(28px);
+    transform: translate(-51%, 150%);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-51%, 0);
+  }
 }
 
 .power-switch:hover {
@@ -1069,12 +1257,13 @@ html {
 }
 
 .coin {
-  font-size: 8rem;
+  font-size: 7rem;
   color: gold;
   animation: fadeOut 1s ease-out forwards;
   width: 80px;
   height: 80px;
   text-shadow: 4px 4px 28px rgba(241, 199, 0, 1);
+  transform: translateY(-120px);
 }
 
 @keyframes fadeOut {
@@ -1095,6 +1284,19 @@ html {
     overflow-x: hidden !important;
   }
 
+  .neon-line {
+    width: 188px;
+    margin-bottom: 0;
+    transform: translateY(-18px);
+  }
+
+  .player-logo h1 {
+    width: 200px;
+    transform: none;
+    height: 41px;
+    transform: translateX(-15px);
+  }
+
   .flyout-links-4-mobile {
     display: flex;
     padding-top: 35px;
@@ -1103,6 +1305,7 @@ html {
     align-items: center;
     text-align: center;
     margin: 0 auto;
+    padding-bottom: 128px;
   }
 
   .fly-chip-mob,
@@ -1112,11 +1315,17 @@ html {
     color: white;
     margin: 6px;
     width: fit-content;
-    outline: 2px red groove;
+    outline: 2px #ff0000 groove;
     padding: 4px;
     margin-left: 12px;
     margin-right: 12px;
   }
+
+  .flyout-trigger,
+  .flyout {
+    display: none;
+  }
+
   .introDescription1,
   .introDescription5,
   .introDescription6,
@@ -1135,7 +1344,9 @@ html {
     margin: -37px;
   }
   .text-4-slider {
-    margin-left: -140px;
+    margin-left: -224px;
+    font-size: 21px;
+
     z-index: 2000000 !important;
   }
 
@@ -1155,9 +1366,8 @@ html {
     display: flex;
     /* outline: 40px red groove !important; */
     position: absolute;
-    top: 55px;
-    left: 50px;
-    z-index: 2220000 !important;
+    top: 60px;
+    left: 6px;
   }
 
   .audio-bar {
@@ -1240,36 +1450,22 @@ html {
 
   .logo-text {
     font-size: 25px;
-    text-transform: uppercase;
     transform: scaleY(1.5);
     display: inline-block;
     letter-spacing: 2px;
   }
 
-  .eq-wrapper {
-    /* width: 100px; */
-    position: absolute;
-    left: -20px;
-    top: 25px;
-  }
-  .equalizer canvas {
-    margin-left: 55px;
-  }
-
   /* controls compressed */
   .controls-left {
     margin-right: 0;
-    gap: 6px;
+    gap: 0;
+    z-index: 100000;
   }
   .controls-left button {
     /* padding: 16px 12px; */
     font-size: 14px;
     width: 65px;
     /* outline: #00ff2a 2px ridge; */
-  }
-
-  .seekbar-wrapper {
-    /* display: none; */
   }
 
   /* Swipeable horizontal playlist tabs - touch-first */
@@ -1327,15 +1523,7 @@ html {
 
   .playlist-tab.active {
     background: #001f00;
-    color: red;
-
-    /* box-shadow: 10px 10px 90px 24px rgba(249, 10, 10, 1); */
-    /* transform: translateY(-2px); */
-  }
-
-  /* hide left column (desktop playlist list) on mobile — tabs replace it */
-  .left {
-    /* display: none; */
+    color: #ff0000;
   }
 
   /* right column: content full width and tracks scrollable */
@@ -1353,7 +1541,7 @@ html {
     padding: 8px;
     padding-left: 8px;
     padding-right: 8px;
-    transform: translateY(110px);
+    transform: translateY(80px);
   }
 
   .right p {
@@ -1367,15 +1555,11 @@ html {
     margin-bottom: -26px;
     z-index: 40000;
   }
-  .playlist-title-puter h2 {
-    font-size: 48px;
-    letter-spacing: 4px;
-    /* margin-right: 15px;
-    margin-bottom: -20px; */
-  }
+
   .puter {
     width: 56px;
     height: auto;
+    margin-right: 20px;
   }
 
   /* tracks area: large scrollable list with good touch targets */
@@ -1384,6 +1568,7 @@ html {
     outline: #00ff4c 4px ridge;
     overflow-y: auto;
     padding: 6px;
+    margin-left: 0;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -1391,7 +1576,7 @@ html {
     padding: 12px;
     margin-bottom: 8px;
     font-size: 16px;
-    background: rgba(10, 30, 60, 0.9);
+    background: rgba(10, 64, 225, 0.64);
     outline: 3px solid rgba(255, 255, 255, 0.04);
   }
 
@@ -1467,9 +1652,16 @@ html {
 }
 
 @media (min-width: 240px) and (max-width: 359px) {
+  html {
+    overflow: hidden;
+  }
+
   .app.flex {
     display: none;
-    overflow: hidden !important;
+  }
+
+  .dave {
+    left: 27% !important;
   }
 
   .unsupported-container {
@@ -1477,8 +1669,9 @@ html {
     align-items: center;
     justify-content: center;
     /* margin-top: 0; */
-    transform: translateY(10px);
+    /* transform: translateY(10px); */
     height: 100vh;
+    width: 100vw;
   }
 
   .unsupported-text {
@@ -1497,6 +1690,10 @@ html {
 }
 
 @media (min-width: 481px) and (max-width: 1279px) {
+  html {
+    overflow: hidden;
+  }
+
   .app.flex {
     display: none;
     overflow: hidden !important;
@@ -1507,7 +1704,7 @@ html {
     align-items: center;
     justify-content: center;
     /* margin-top: 0; */
-    transform: translateY(10px);
+    /* transform: translateY(10px); */
     height: 100vh;
   }
 
