@@ -17,11 +17,11 @@ ESSENTIAL FEATURES
 
 ► stylish startup screen and sound of lovely HDD seeking tracks
 
-► in application kick-butt graphics and audio matching 90s aesthetics, featuring incredible Dangerous Dave
+► in application kick-butt graphics and audio matching 90s aesthetics [featuring incredible Dangerous Dave]
 
 ► four cool backdrops: Pro Tracker, Milky Tracker, Impulse tracker and hacker keyboard [set randomly upon app startup 25% chance]
 
-► animated vintage red computer switch to close the page, if you got bored
+► animated vintage red computer switch to close the page [if you got bored]
 
 <br>
 
@@ -39,6 +39,8 @@ THINGS TODO
 
 <br>
 <br>
+
+Production environment: Windows 7 x64 ESU, VS Codium 1.101, Node.Js 23.7
 
 Read more here:
 <br>
