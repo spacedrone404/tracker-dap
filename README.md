@@ -37,8 +37,6 @@ to handle such a large task to support so many music formats.
 
 ► TBD
 
-<br>
-
 ## Production environment: Windows 7 x64 ESU, VS Codium 1.101, Node.Js 23.7, RedFox v143
 
 Read more here:
