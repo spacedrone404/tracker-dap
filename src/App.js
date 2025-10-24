@@ -111,6 +111,27 @@ export default function App() {
   // playlists data (kept inside component so PUBLIC_URL is available)
   const playlists = [
     {
+      name: "GAMES",
+      tracks: [
+        {
+          name: "BaseHead - Crusader",
+          url: PUBLIC_URL + "/Music/games/basehead.s3m",
+        },
+        {
+          name: "Silent Mode - Eternity",
+          url: PUBLIC_URL + "/Music/games/eternity.mod",
+        },
+        {
+          name: "Alexander Brandon - Jazz The Jack Rabbit",
+          url: PUBLIC_URL + "/Music/games/jazz.s3m",
+        },
+        {
+          name: "C.C.Catch - One Must Fall",
+          url: PUBLIC_URL + "/Music/games/omf2097.s3m",
+        },
+      ],
+    },
+    {
       name: "DEMOSCENE",
       tracks: [
         {
@@ -164,27 +185,6 @@ export default function App() {
       ],
     },
     {
-      name: "GAMES",
-      tracks: [
-        {
-          name: "BaseHead - Crusader",
-          url: PUBLIC_URL + "/Music/games/basehead.s3m",
-        },
-        {
-          name: "Silent Mode - Eternity",
-          url: PUBLIC_URL + "/Music/games/eternity.mod",
-        },
-        {
-          name: "Alexander Brandon - Jazz The Jack Rabbit",
-          url: PUBLIC_URL + "/Music/games/jazz.s3m",
-        },
-        {
-          name: "C.C.Catch - One Must Fall",
-          url: PUBLIC_URL + "/Music/games/omf2097.s3m",
-        },
-      ],
-    },
-    {
       name: "KEYGEN",
       tracks: [
         {
@@ -203,23 +203,108 @@ export default function App() {
       ],
     },
     {
-      name: "TRANCE",
+      name: "POP",
+      tracks: [
+        {
+          name: "Unknown - Duck Dance II",
+          url: PUBLIC_URL + "/Music/pop/duckdance.it",
+        },
+        {
+          name: "DJ Mohax - Gazeta",
+          url: PUBLIC_URL + "/Music/pop/gazeta.mod",
+        },
+        {
+          name: "Siatek - I Love You",
+          url: PUBLIC_URL + "/Music/pop/iloveyou.it",
+        },
+        {
+          name: "Tenchi - POS 15",
+          url: PUBLIC_URL + "/Music/pop/pos15.it",
+        },
+      ],
+    },
+    {
+      name: "FUNK",
+      tracks: [
+        {
+          name: "Radix - Milk",
+          url: PUBLIC_URL + "/Music/funk/milk.xm",
+        },
+        {
+          name: "Dune - Last Train",
+          url: PUBLIC_URL + "/Music/funk/lasttrain.s3m",
+        },
+        {
+          name: "Virgill - Save My Dick",
+          url: PUBLIC_URL + "/Music/funk/savemydick.mod",
+        },
+        {
+          name: "RevisQ - Vincent's Car",
+          url: PUBLIC_URL + "/Music/funk/vincentcar.mod",
+        },
+      ],
+    },
+
+    {
+      name: "METAL",
+      tracks: [
+        {
+          name: "Subpacket - Command & Conqueror",
+          url: PUBLIC_URL + "/Music/metal/cckewl.xm",
+        },
+        {
+          name: "MrRoot - DieHard",
+          url: PUBLIC_URL + "/Music/metal/diehard.mod",
+        },
+        {
+          name: "Tarantula - A Journey In Time",
+          url: PUBLIC_URL + "/Music/metal/journey.it",
+        },
+        {
+          name: "Darkman007 - Metal World",
+          url: PUBLIC_URL + "/Music/metal/metalworld.it",
+        },
+      ],
+    },
+    {
+      name: "CHILLOUT",
+      tracks: [
+        {
+          name: "Unknown - Three Legged Wookie",
+          url: PUBLIC_URL + "/Music/chillout/3legged.it",
+        },
+        {
+          name: "Radix - Check Yer Feet",
+          url: PUBLIC_URL + "/Music/chillout/checkyer.mod",
+        },
+        {
+          name: "Reed - The Laid Back Funk",
+          url: PUBLIC_URL + "/Music/chillout/laidback.mod",
+        },
+        {
+          name: "RevisQ - Trip To Remix",
+          url: PUBLIC_URL + "/Music/chillout/triptoremix.mod",
+        },
+      ],
+    },
+    {
+      name: "ELECTRONIC",
       tracks: [
         {
           name: "Adnan - Drilling",
-          url: PUBLIC_URL + "/Music/trance/driling.it",
+          url: PUBLIC_URL + "/Music/electronic/driling.it",
         },
         {
           name: "Revisq - Fish, fish ... ",
-          url: PUBLIC_URL + "/Music/trance/fish.mod",
+          url: PUBLIC_URL + "/Music/electronic/fish.mod",
         },
         {
           name: "Unknown - I'am My Slave",
-          url: PUBLIC_URL + "/Music/trance/slave.xm",
+          url: PUBLIC_URL + "/Music/electronic/slave.xm",
         },
         {
           name: "Mobby - A Trip To Trance",
-          url: PUBLIC_URL + "/Music/trance/trip.mod",
+          url: PUBLIC_URL + "/Music/electronic/trip.mod",
         },
       ],
     },
@@ -246,7 +331,7 @@ export default function App() {
   const [positionsHistory, setPositionsHistory] = useState([]);
 
   // Generation distance and safe screen margins
-  const generateUniqueRandomPosition = (marginPx = 50, minDistance = 18) => {
+  const generateUniqueRandomPosition = (marginPx = 250, minDistance = 28) => {
     const windowWidth = window.innerWidth - 2 * marginPx;
     const windowHeight = window.innerHeight - 2 * marginPx;
 
@@ -998,14 +1083,14 @@ export default function App() {
     }, [selectedPlaylist]);
 
     // keyboard left/right support for accessibility
-    const onKey = (e) => {
-      if (!playlistTabsRef.current) return;
-      if (e.key === "ArrowRight") {
-        playlistTabsRef.current.scrollBy({ left: 120, behavior: "smooth" });
-      } else if (e.key === "ArrowLeft") {
-        playlistTabsRef.current.scrollBy({ left: -120, behavior: "smooth" });
-      }
-    };
+    // const onKey = (e) => {
+    //   if (!playlistTabsRef.current) return;
+    //   if (e.key === "ArrowRight") {
+    //     playlistTabsRef.current.scrollBy({ left: 120, behavior: "smooth" });
+    //   } else if (e.key === "ArrowLeft") {
+    //     playlistTabsRef.current.scrollBy({ left: -120, behavior: "smooth" });
+    //   }
+    // };
 
     return (
       <div className="playlist-tabs-wrap" aria-hidden={playlists.length === 0}>
@@ -1013,7 +1098,7 @@ export default function App() {
           className="playlist-tabs"
           ref={playlistTabsRef}
           tabIndex={0}
-          onKeyDown={onKey}
+          // onKeyDown={onKey}
         >
           {playlists.map((pl, idx) => (
             <button
@@ -1062,13 +1147,10 @@ export default function App() {
   return (
     <>
       <div className="unsupported-container crt-scanlines crt-colorsep">
-        <DimensionsDetector />
+        {/* <DimensionsDetector /> */}
         <div className="unsupported-text">
-          This web application is intended to run on desktop / laptop in
-          following resolutions: 2560x1600 and more, 1920x1080, 1280x1024. Also
-          it can handle mobile mobile devices with viewport width: 360px -
-          480px. That's quite a range of resolutions to say the least, so choose
-          yours and return.{" "}
+          This web application is intended to run on desktop / laptop /
+          smartphone.
           <span className="testbed">
             {" "}
             Also it is a testbed playground for restricting user and showcasing
@@ -1306,104 +1388,107 @@ export default function App() {
               </>
             ) : (
               <>
-                <p className="introDescription1">
-                  Here you will find all tracker music that were posted on
-                  Trackerninja's Tik-Tok channel from 2021 to 2027 wrapped in a
-                  nice web GUI app. So, pick your style on the playlist menu and
-                  you are good to go.
-                </p>
-                <p
-                  className="introDescription2"
-                  onMouseEnter={daveOnHover}
-                  onClick={() => {
-                    daveOnClick();
-                    addCoin();
-                  }}
-                >
-                  UNBLOCK AUDIO RESTRICTIONS FOR THIS WEBSITE TO FULLY ENJOY IT!
-                  Tested resolutions: 2560x1600, 1920x1080, 1280x1024. Special
-                  layout for mobile devices: viewport width 360px-480px. Other
-                  resolutions are not intended. <br /> F#ck round buttons!!!!
-                </p>
-                <p className="introDescription5">
-                  Startup sound: Neo Geo CD startup jingle
-                </p>
-                <p className="introDescription6">
-                  Startup illustration and audio design:
-                </p>
-                <p className="introDescription7">
-                  <a
-                    href="https://stock.adobe.com/contributor/204789995/spacedrone808"
-                    target="_blank"
-                    rel="noreferrer"
-                    onMouseEnter={playClickSoundPlaylist}
-                    onClick={daveOnHover}
+                <div className="introWrapper">
+                  <p className="introDescription1">
+                    Here you will find all tracker music that were posted on
+                    Trackerninja's Tik-Tok channel from 2021 to 2027 wrapped in
+                    a nice web GUI app. So, pick your style on the playlist menu
+                    and you are good to go.
+                  </p>
+                  <p
+                    className="introDescription2"
+                    onMouseEnter={daveOnHover}
+                    onClick={() => {
+                      daveOnClick();
+                      addCoin();
+                    }}
                   >
-                    SPACEDRONE808 aka TRACKERNINJA
-                  </a>
-                  <br />
-                  <a
-                    className="introDescription1-link"
-                    href="https://mega.nz/file/ml4WlBjT#tPOOhOfVFg9BWwLWGCsHs2CCQ3iTnVysqeWMczJacbM"
-                    target="_blank"
-                    rel="noreferrer"
-                    onMouseEnter={playClickSoundPlaylist}
-                    onClick={daveOnHover}
-                  >
-                    DOWNLOAD WHOLE MUSIC LIBRARY
-                  </a>
-                </p>
-                <img
-                  className="dave"
-                  src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
-                  alt="Dangerous Dave"
-                  title="No Dangerous Daves were harmed during production! Click me for powerUp!"
-                  width="204"
-                  onMouseEnter={daveOnHover}
-                  onClick={() => {
-                    daveOnClick(); // Execution of multiple functions
-                    addCoin();
-                  }}
-                />
-                {coins.map((coin, idx) => (
-                  <Coin {...coin} key={idx} />
-                ))}
-                <div className="flyout-links-4-mobile">
-                  React-based web application is intended to play tracker music
-                  by means of
-                  <a
-                    className="fly-chip-mob"
-                    href="https://www.npmjs.com/package/chiptune3"
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={daveOnClick}
-                  >
-                    Chiptune3.js
-                  </a>
-                  and
-                  <a
-                    className="fly-mpt-mob"
-                    href="https://lib.openmpt.org/libopenmpt/download"
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={daveOnClick}
-                  >
-                    OpenMPT
-                  </a>
-                  libraries.
-                  <br />
-                  Proudly brought to you by{" "}
-                  <a
-                    className="fly-trk-mob"
-                    href="https://trackerninja.codeberg.page"
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={daveOnHover}
-                  >
-                    {" "}
-                    TrackerNinja
-                  </a>
-                  in 2025 &copy;
+                    UNBLOCK AUDIO RESTRICTIONS FOR THIS WEBSITE TO FULLY ENJOY
+                    IT! This web application is intended to run on
+                    desktop/laptop/smartphone. That's quite a range of
+                    resolutions to say the least, so choose yours and return.
+                    F#ck round buttons!!!!
+                  </p>
+                  <p className="introDescription5">
+                    Startup sound: Neo Geo CD startup jingle
+                  </p>
+                  <p className="introDescription6">
+                    Startup illustration and audio design:
+                  </p>
+                  <p className="introDescription7">
+                    <a
+                      href="https://stock.adobe.com/contributor/204789995/spacedrone808"
+                      target="_blank"
+                      rel="noreferrer"
+                      onMouseEnter={playClickSoundPlaylist}
+                      onClick={daveOnHover}
+                    >
+                      SPACEDRONE808 aka TRACKERNINJA
+                    </a>
+                    <br />
+                    <a
+                      className="introDescription1-link"
+                      href="https://mega.nz/file/ml4WlBjT#tPOOhOfVFg9BWwLWGCsHs2CCQ3iTnVysqeWMczJacbM"
+                      target="_blank"
+                      rel="noreferrer"
+                      onMouseEnter={playClickSoundPlaylist}
+                      onClick={daveOnHover}
+                    >
+                      DOWNLOAD WHOLE MUSIC LIBRARY
+                    </a>
+                  </p>
+                  <img
+                    className="dave"
+                    src={PUBLIC_URL + "/Pix/dangerous-dave.png"}
+                    alt="Dangerous Dave"
+                    title="No Dangerous Daves were harmed during production! Click me for powerUp!"
+                    width="204"
+                    onMouseEnter={daveOnHover}
+                    onClick={() => {
+                      daveOnClick(); // Execution of multiple functions
+                      addCoin();
+                    }}
+                  />
+                  {coins.map((coin, idx) => (
+                    <Coin {...coin} key={idx} />
+                  ))}
+                  <div className="flyout-links-4-mobile">
+                    React-based web application is intended to play tracker
+                    music by means of
+                    <a
+                      className="fly-chip-mob"
+                      href="https://www.npmjs.com/package/chiptune3"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={daveOnClick}
+                    >
+                      Chiptune3.js
+                    </a>
+                    and
+                    <a
+                      className="fly-mpt-mob"
+                      href="https://lib.openmpt.org/libopenmpt/download"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={daveOnClick}
+                    >
+                      OpenMPT
+                    </a>
+                    libraries.
+                    <br />
+                    Proudly brought to you by{" "}
+                    <a
+                      className="fly-trk-mob"
+                      href="https://trackerninja.codeberg.page"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={daveOnHover}
+                    >
+                      {" "}
+                      TrackerNinja
+                    </a>
+                    in 2025 &copy;
+                  </div>
                 </div>
               </>
             )}
