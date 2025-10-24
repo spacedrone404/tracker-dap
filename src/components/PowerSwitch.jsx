@@ -30,7 +30,7 @@ function PowerSwitchInner(props, ref) {
   }, [pressed]);
 
   useEffect(() => {
-    document.body.style.transition = "all 4.4s cubic-bezier(.4,.4,.23,1)";
+    document.body.style.transition = "all 8.4s cubic-bezier(.4,.4,.23,1)";
     if (isBodyAnimating) {
       document.body.style.opacity = "0";
       document.body.style.overflow = "hidden";

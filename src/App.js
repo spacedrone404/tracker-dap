@@ -1153,8 +1153,8 @@ export default function App() {
           smartphone.
           <span className="testbed">
             {" "}
-            Also it is a testbed playground for restricting user and showcasing
-            such messages.{" "}
+            Also it is a testbed playground for restricting user in case when
+            resolution is not matched require one and showcasing such messages.{" "}
           </span>
           <span className="home">
             <a className="home-link" href={PUBLIC_URL} onClick={daveOnClick}>
@@ -1192,7 +1192,8 @@ export default function App() {
             <div className="player-logo">
               <img
                 src={PUBLIC_URL + "/tracker.png"}
-                alt="Logo"
+                alt="Computer running tracker"
+                title="Computer running tracker"
                 className="logo-pix"
                 width="50"
                 height="50"
@@ -1398,6 +1399,7 @@ export default function App() {
                   <p
                     className="introDescription2"
                     onMouseEnter={daveOnHover}
+                    title="Clcick me to obtain some coins!"
                     onClick={() => {
                       daveOnClick();
                       addCoin();
@@ -1406,8 +1408,8 @@ export default function App() {
                     UNBLOCK AUDIO RESTRICTIONS FOR THIS WEBSITE TO FULLY ENJOY
                     IT! This web application is intended to run on
                     desktop/laptop/smartphone. That's quite a range of
-                    resolutions to say the least, so choose yours and return.
-                    F#ck round buttons!!!!
+                    resolutions to say the least, so choose yours and fire up
+                    music. F#ck round buttons!!!!
                   </p>
                   <p className="introDescription5">
                     Startup sound: Neo Geo CD startup jingle

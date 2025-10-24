@@ -225,7 +225,8 @@ button:hover,
 .flyout,
 .flyout:hover,
 .dave,
-.dave:hover {
+.dave:hover,
+.introDescription2 {
   cursor: url("../public/Pix/gui/link.png"), auto;
 }
 
@@ -1455,7 +1456,8 @@ html {
   .controls-left button {
     /* padding: 16px 12px; */
     font-size: 14px;
-    width: 65px;
+    width: 59px;
+    height: 59px;
     /* outline: #00ff2a 2px ridge; */
   }
 
@@ -1819,8 +1821,12 @@ html {
     position: absolute;
   }
 
+  .title-span {
+    display: none;
+  }
+
   .logo-title {
-    font-size: 22px;
+    font-size: 25px !important;
     z-index: 180000;
     position: relative;
     text-shadow: -2px 26px 86px 17px rgba(255, 0, 0, 0.75);
@@ -1902,7 +1908,7 @@ html {
 
   /* controls compressed */
   .controls-left {
-    margin-right: 10px;
+    margin-right: 0px;
     gap: 6px;
     z-index: 100000;
   }
