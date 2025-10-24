@@ -23,15 +23,13 @@ ESSENTIAL FEATURES
 
 ► animated vintage red computer switch to close the page [if you got bored]
 
+► mobile version to suport variety of devices
+
 <br>
 
 THINGS TODO
 
 ► full playlist support
-
-► off load some functions to components
-
-► mobile version [360-480px width of viewport] 
 
 ► …. stuff …. stuff …. stufff
 
