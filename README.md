@@ -7,7 +7,7 @@ to handle such a large task to support so many music formats.
 
 <br>
 
-ESSENTIAL FEATURES
+# ESSENTIAL FEATURES
 
 ► the most raddest tracker music on the entire interwebs
 
@@ -29,7 +29,7 @@ ESSENTIAL FEATURES
 
 <br>
 
-THINGS TODO
+# THINGS TODO
 
 ► full playlist support
 
@@ -39,7 +39,7 @@ THINGS TODO
 
 <br>
 
-Production environment: Windows 7 x64 ESU, VS Codium 1.101, Node.Js 23.7, RedFox v143
+## Production environment: Windows 7 x64 ESU, VS Codium 1.101, Node.Js 23.7, RedFox v143
 
 Read more here:
 <br>
