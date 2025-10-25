@@ -25,7 +25,7 @@ to handle such a large task to support so many music formats.
 
 ► animated vintage red computer switch to close the page [if you got bored]
 
-► mobile version to suport variety of devices
+► mobile version to support variety of devices
 
 <br>
 
@@ -37,7 +37,7 @@ to handle such a large task to support so many music formats.
 
 ► TBD
 
-## Production environment: Windows 7 x64 ESU, VS Codium 1.101, Node.Js 23.7, RedFox v143
+## Production environment: Windows 7 x64 ESU, Node.Js 23.7, Git 2.46.2, VS Codium 1.101, RedFox v143 
 
 Read more here:
 <br>
