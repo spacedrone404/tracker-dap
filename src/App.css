@@ -1714,8 +1714,8 @@ html {
 @media (min-width: 299px) and (max-width: 361px) {
   /* Fix for control buttons svgs */
   .correction360px {
-    width: 248%;
-    transform: translateX(-5px);
+    width: 288%;
+    transform: translate(-5px, -3px);
   }
 
   .startup img.startup-image {
