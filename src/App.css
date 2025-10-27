@@ -1717,6 +1717,10 @@ html {
     width: 288%;
     transform: translate(-5px, -3px);
   }
+  .correction360px2 {
+    width: 128%;
+    transform: translate(-5px, 1px);
+  }
 
   .startup img.startup-image {
     transform: rotate(270deg) scale(2) !important;

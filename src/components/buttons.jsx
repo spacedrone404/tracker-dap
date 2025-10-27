@@ -113,14 +113,24 @@ const LoopOnIcon = () => (
 
 // Rewind Button Icon
 const RewindIcon = () => (
-  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <svg
+    version="1.1"
+    className="correction360px2"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+  >
     <path d="M25,6v20L13,16L25,6z M7,16l12,10v-3.698L11.438,16L19,9.698V6L7,16z" />
   </svg>
 );
 
 // Fast Forward Button Icon
 const FastForwardIcon = () => (
-  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <svg
+    version="1.1"
+    className="correction360px2"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+  >
     <path d="M19,16L7,26V6L19,16z M13,6v3.698L20.562,16L13,22.302V26l12-10L13,6z" />
   </svg>
 );

@@ -1332,7 +1332,7 @@ export default function App() {
                 onPointerDown={(e) => e.stopPropagation()}
                 title="Previous track [◄]"
               >
-                <RewindIcon className="correction360px" />
+                <RewindIcon className="correction360px2" />
               </button>
               <button
                 onClick={handlePlayPause}
@@ -1355,7 +1355,7 @@ export default function App() {
                 onPointerDown={(e) => e.stopPropagation()}
                 title="Next track [►]"
               >
-                <FastForwardIcon className="correction360px" />
+                <FastForwardIcon className="correction360px2" />
               </button>
               <button
                 onClick={handleShuffle}
