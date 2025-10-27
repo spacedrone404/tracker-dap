@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/tracker-dap/static/css/main.ab0acb96.css",
-    "main.js": "/tracker-dap/static/js/main.992b1c7d.js",
+    "main.css": "/tracker-dap/static/css/main.9d0c4400.css",
+    "main.js": "/tracker-dap/static/js/main.ef508e32.js",
     "static/js/453.8fec06a1.chunk.js": "/tracker-dap/static/js/453.8fec06a1.chunk.js",
     "static/media/AmigaTopazUnicodeRus.woff": "/tracker-dap/static/media/AmigaTopazUnicodeRus.45251c6de777d0e4ab5f.woff",
     "static/media/chiptune3.worklet.js": "/tracker-dap/static/media/chiptune3.worklet.34a13912f673f254533e.js",
     "index.html": "/tracker-dap/index.html",
-    "main.ab0acb96.css.map": "/tracker-dap/static/css/main.ab0acb96.css.map",
-    "main.992b1c7d.js.map": "/tracker-dap/static/js/main.992b1c7d.js.map",
+    "main.9d0c4400.css.map": "/tracker-dap/static/css/main.9d0c4400.css.map",
+    "main.ef508e32.js.map": "/tracker-dap/static/js/main.ef508e32.js.map",
     "453.8fec06a1.chunk.js.map": "/tracker-dap/static/js/453.8fec06a1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ab0acb96.css",
-    "static/js/main.992b1c7d.js"
+    "static/css/main.9d0c4400.css",
+    "static/js/main.ef508e32.js"
   ]
 }
