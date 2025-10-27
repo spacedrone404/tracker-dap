@@ -8,6 +8,16 @@ import Equalizer from "./components/Equalizer";
 import ScrollTop from "./components/ScrollTop";
 import StarAnimation from "./components/StarAnimation";
 import DimensionsDetector from "./components/DimensionsDetector";
+import {
+  PlayIcon,
+  PauseIcon,
+  RewindIcon,
+  FastForwardIcon,
+  ShuffleOffIcon,
+  ShuffleOnIcon,
+  LoopOffIcon,
+  LoopOnIcon,
+} from "./components/buttons";
 
 import "./App.css";
 
@@ -48,6 +58,21 @@ export default function App() {
   const [isReady, setIsReady] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [showStartup, setShowStartup] = useState(true);
+
+  // --- small screen detection (hide flyout on tiny screens) ---
+  const [isSmallScreen, setIsSmallScreen] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 480 : false
+  );
+
+  useEffect(() => {
+    const onResize = () => {
+      try {
+        setIsSmallScreen(window.innerWidth < 480);
+      } catch (e) {}
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   // refs
   const player = useRef(null);
@@ -114,6 +139,10 @@ export default function App() {
       name: "GAMES",
       tracks: [
         {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/games/shortest.mod",
+        },
+        {
           name: "BaseHead - Crusader",
           url: PUBLIC_URL + "/Music/games/basehead.s3m",
         },
@@ -134,6 +163,10 @@ export default function App() {
     {
       name: "DEMOSCENE",
       tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/demoscene/shortest.mod",
+        },
         {
           name: "Moby - Fury Forest",
           url: `${PUBLIC_URL}/Music/demoscene/furyforest.mod`,
@@ -188,6 +221,10 @@ export default function App() {
       name: "KEYGEN",
       tracks: [
         {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/keygen/shortest.mod",
+        },
+        {
           name: "Unknown - ST-Style",
           url: PUBLIC_URL + "/Music/keygen/flcstst.xm",
         },
@@ -205,6 +242,10 @@ export default function App() {
     {
       name: "POP",
       tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/pop/shortest.mod",
+        },
         {
           name: "Unknown - Duck Dance II",
           url: PUBLIC_URL + "/Music/pop/duckdance.it",
@@ -226,6 +267,10 @@ export default function App() {
     {
       name: "FUNK",
       tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/funk/shortest.mod",
+        },
         {
           name: "Radix - Milk",
           url: PUBLIC_URL + "/Music/funk/milk.xm",
@@ -249,6 +294,10 @@ export default function App() {
       name: "METAL",
       tracks: [
         {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/metal/shortest.mod",
+        },
+        {
           name: "Subpacket - Command & Conqueror",
           url: PUBLIC_URL + "/Music/metal/cckewl.xm",
         },
@@ -270,6 +319,10 @@ export default function App() {
       name: "CHILLOUT",
       tracks: [
         {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/chillout/shortest.mod",
+        },
+        {
           name: "Unknown - Three Legged Wookie",
           url: PUBLIC_URL + "/Music/chillout/3legged.it",
         },
@@ -290,6 +343,10 @@ export default function App() {
     {
       name: "ELECTRONIC",
       tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/electronic/shortest.mod",
+        },
         {
           name: "Adnan - Drilling",
           url: PUBLIC_URL + "/Music/electronic/driling.it",
@@ -1061,8 +1118,12 @@ export default function App() {
   }
 
   // ---------- PlaylistTabs (new small internal component) ----------
-
-  const PlaylistTabs = ({ playlists, selectedPlaylist, onSelect }) => {
+  const PlaylistTabs = ({
+    playlists,
+    selectedPlaylist,
+    onSelect,
+    isSmallScreen,
+  }) => {
     // ensure active tab is scrolled into view when selected
     useEffect(() => {
       if (!playlistTabsRef.current || !selectedPlaylist) return;
@@ -1082,23 +1143,14 @@ export default function App() {
       }
     }, [selectedPlaylist]);
 
-    // keyboard left/right support for accessibility
-    // const onKey = (e) => {
-    //   if (!playlistTabsRef.current) return;
-    //   if (e.key === "ArrowRight") {
-    //     playlistTabsRef.current.scrollBy({ left: 120, behavior: "smooth" });
-    //   } else if (e.key === "ArrowLeft") {
-    //     playlistTabsRef.current.scrollBy({ left: -120, behavior: "smooth" });
-    //   }
-    // };
-
     return (
       <div className="playlist-tabs-wrap" aria-hidden={playlists.length === 0}>
         <div
           className="playlist-tabs"
           ref={playlistTabsRef}
           tabIndex={0}
-          // onKeyDown={onKey}
+          // allow horizontal pan only (helps touch behavior)
+          style={{ touchAction: "pan-x" }}
         >
           {playlists.map((pl, idx) => (
             <button
@@ -1112,9 +1164,9 @@ export default function App() {
                 onSelect(pl);
               }}
               onTouchStart={() => {
-                /* small enhancement: play hover sound on touch */
+                /* play hover sound on touch only if not on tiny screens */
                 try {
-                  if (audioHover.current) {
+                  if (!isSmallScreen && audioHover.current) {
                     audioHover.current.currentTime = 0;
                     audioHover.current.volume = 0.18;
                     audioHover.current.play();
@@ -1130,19 +1182,6 @@ export default function App() {
       </div>
     );
   };
-
-  // ---------- JSX: render PlaylistTabs inside sticky-controls (mobile & desktop safe) ----------
-  if (showStartup) {
-    return (
-      <div className="startup startup crt-scanlines crt-colorsep">
-        <img
-          src={PUBLIC_URL + "/Pix/startup.png"}
-          alt="Startup"
-          className="startup-image"
-        />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -1233,7 +1272,10 @@ export default function App() {
               {/* ... volume + seek UI unchanged ... */}
               <div className="volume-bar">
                 <div className="seek-bar-wrap">
-                  <div className="volume-wrapper">
+                  <div
+                    className="volume-wrapper"
+                    style={{ touchAction: "manipulation" }}
+                  >
                     <p className="text-4-slider">Vol</p>
                     <input
                       className="audio-bar"
@@ -1243,6 +1285,9 @@ export default function App() {
                       max="100"
                       value={Math.round(volume * 100)}
                       onChange={(e) => setVolume(Number(e.target.value) / 100)}
+                      onTouchStart={(e) => e.stopPropagation()}
+                      onTouchMove={(e) => e.stopPropagation()}
+                      onPointerDown={(e) => e.stopPropagation()}
                     />
                   </div>
                 </div>
@@ -1250,7 +1295,10 @@ export default function App() {
 
               <div className="progress-and-eq">
                 <div className="seek-bar-wrap">
-                  <div className="position-wrapper">
+                  <div
+                    className="position-wrapper"
+                    style={{ touchAction: "manipulation" }}
+                  >
                     <p className="text-4-slider">Pos</p>
                     <input
                       className="seek-bar"
@@ -1262,6 +1310,9 @@ export default function App() {
                       onChange={(e) =>
                         handleSeek(Number(e.target.value) / 1000)
                       }
+                      onTouchStart={(e) => e.stopPropagation()}
+                      onTouchMove={(e) => e.stopPropagation()}
+                      onPointerDown={(e) => e.stopPropagation()}
                     />
                   </div>
                 </div>
@@ -1272,33 +1323,67 @@ export default function App() {
               className={`controls-left crt-scanlines ${
                 selectedPlaylist ? "visible" : "hidden"
               }`}
+              style={{ touchAction: "manipulation" }}
             >
-              <button onClick={handlePrev} title="Previous track [◄]">
-                ◄◄
+              <button
+                onClick={handlePrev}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onPointerDown={(e) => e.stopPropagation()}
+                title="Previous track [◄]"
+              >
+                <RewindIcon />
               </button>
               <button
                 onClick={handlePlayPause}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onPointerDown={(e) => e.stopPropagation()}
                 title="Play/Pause [SPACE]"
                 className={isPlayingRef.current ? "playing" : "paused"}
               >
-                {isPlayingRef.current ? "II" : "►"}
+                {isPlayingRef.current ? (
+                  <PauseIcon className="correction360px" />
+                ) : (
+                  <PlayIcon className="correction360px" />
+                )}
               </button>
-              <button onClick={handleNext} title="Next track [►]">
-                ►►
+              <button
+                onClick={handleNext}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onPointerDown={(e) => e.stopPropagation()}
+                title="Next track [►]"
+              >
+                <FastForwardIcon />
               </button>
               <button
                 onClick={handleShuffle}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onPointerDown={(e) => e.stopPropagation()}
                 title="Shuffle toggle [F10]"
                 className={isShuffle ? "on" : "off"}
               >
-                {isShuffle ? "≈ On" : "≈ Off"}
+                {isShuffle ? (
+                  <ShuffleOnIcon className="correction360px" />
+                ) : (
+                  <ShuffleOffIcon className="correction360px" />
+                )}
               </button>
               <button
                 onClick={handleLoop}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onPointerDown={(e) => e.stopPropagation()}
                 title="Loop toggle [F11]"
                 className={isLoop ? "on" : "off"}
               >
-                {isLoop ? "∞ On" : "∞ Off"}
+                {isLoop ? (
+                  <LoopOnIcon className="correction360px" />
+                ) : (
+                  <LoopOffIcon className="correction360px" />
+                )}
               </button>
             </div>
           </div>
@@ -1310,6 +1395,7 @@ export default function App() {
             onSelect={(pl) => {
               setSelectedPlaylist(pl);
             }}
+            isSmallScreen={isSmallScreen}
           />
         </div>
 
@@ -1331,6 +1417,12 @@ export default function App() {
                     setSelectedPlaylist(pl);
                   }}
                   onMouseEnter={playlistHover}
+                  onTouchStart={() => {
+                    // do not play hover sound for touch devices with tiny screens
+                    if (!isSmallScreen) {
+                      playlistHover();
+                    }
+                  }}
                   className={selectedPlaylist?.name === pl.name ? "active" : ""}
                 >
                   {pl.name}
@@ -1523,66 +1615,71 @@ export default function App() {
           <PowerSwitch ref={powerSwitchRef} />
         </div>
 
-        <div
-          className="flyout-trigger"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        />
-        <div className="flyout crt-scanlines crt-colorsep">
-          <span className="about">
-            ░▒▓ <span className="about-text">ABOUT APP </span> ▓▒░
-          </span>
-          <p className="flyout-links">
-            React-based web application is intended to play tracker music by
-            means of
-            <a
-              className="fly-chip"
-              href="https://www.npmjs.com/package/chiptune3"
-              target="_blank"
-              rel="noreferrer"
-              onClick={daveOnClick}
-            >
-              Chiptune3.js
-            </a>
-            and
-            <br />
-            <a
-              className="fly-mpt"
-              href="https://lib.openmpt.org/libopenmpt/download"
-              target="_blank"
-              rel="noreferrer"
-              onClick={daveOnClick}
-            >
-              OpenMPT
-            </a>
-            libraries. Proudly brought to you by
-            <a
-              className="fly-trk"
-              href="https://trackerninja.codeberg.page"
-              target="_blank"
-              rel="noreferrer"
-              onClick={daveOnHover}
-            >
-              TrackerNinja
-            </a>
-            in 2025 ©
-          </p>
-          <br />
-          <p className="flyout-help">
-            <span className="mini">
-              ░▒▓ <span className="about-text"> MINI HELP </span> ▓▒░
-            </span>
-            <br />
-            [SPACE] ▀ Play/Pause <br />
-            [LEFT] ▀ Previous track <br />
-            [RIGHT] ▀ Next track <br />
-            [UP] ▀ Volume up <br />
-            [DOWN] ▀ Volume down <br />
-            [F10] ▀ Shuffle toggle <br />
-            [F11] ▀ Loop toggle <br />
-            [ALT+Q] ▀ Power off machine <br />
-          </p>
-        </div>
+        {/* only render flyout on larger screens (flyout-trigger is a hover-area) */}
+        {!isSmallScreen && (
+          <>
+            <div
+              className="flyout-trigger"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            />
+            <div className="flyout crt-scanlines crt-colorsep">
+              <span className="about">
+                ░▒▓ <span className="about-text">ABOUT APP </span> ▓▒░
+              </span>
+              <p className="flyout-links">
+                React-based web application is intended to play tracker music by
+                means of
+                <a
+                  className="fly-chip"
+                  href="https://www.npmjs.com/package/chiptune3"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={daveOnClick}
+                >
+                  Chiptune3.js
+                </a>
+                and
+                <br />
+                <a
+                  className="fly-mpt"
+                  href="https://lib.openmpt.org/libopenmpt/download"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={daveOnClick}
+                >
+                  OpenMPT
+                </a>
+                libraries. Proudly brought to you by
+                <a
+                  className="fly-trk"
+                  href="https://trackerninja.codeberg.page"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={daveOnHover}
+                >
+                  TrackerNinja
+                </a>
+                in 2025 ©
+              </p>
+              <br />
+              <p className="flyout-help">
+                <span className="mini">
+                  ░▒▓ <span className="about-text"> MINI HELP </span> ▓▒░
+                </span>
+                <br />
+                [SPACE] ▀ Play/Pause <br />
+                [LEFT] ▀ Previous track <br />
+                [RIGHT] ▀ Next track <br />
+                [UP] ▀ Volume up <br />
+                [DOWN] ▀ Volume down <br />
+                [F10] ▀ Shuffle toggle <br />
+                [F11] ▀ Loop toggle <br />
+                [ALT+Q] ▀ Power off machine <br />
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

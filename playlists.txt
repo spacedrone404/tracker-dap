@@ -1,0 +1,258 @@
+    {
+      name: "GAMES",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/games/shortest.mod",
+        },
+        {
+          name: "BaseHead - Crusader",
+          url: PUBLIC_URL + "/Music/games/shortest.mod",
+        },
+        {
+          name: "Silent Mode - Eternity",
+          url: PUBLIC_URL + "/Music/games/shortest.mod",
+        },
+        {
+          name: "Alexander Brandon - Jazz The Jack Rabbit",
+          url: PUBLIC_URL + "/Music/games/shortest.mod",
+        },
+        {
+          name: "C.C.Catch - One Must Fall",
+          url: PUBLIC_URL + "/Music/games/shortest.mod",
+        },
+      ],
+    },
+
+  const playlists = [
+    {
+      name: "GAMES",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/games/shortest.mod",
+        },
+        {
+          name: "BaseHead - Crusader",
+          url: PUBLIC_URL + "/Music/games/basehead.s3m",
+        },
+        {
+          name: "Silent Mode - Eternity",
+          url: PUBLIC_URL + "/Music/games/eternity.mod",
+        },
+        {
+          name: "Alexander Brandon - Jazz The Jack Rabbit",
+          url: PUBLIC_URL + "/Music/games/jazz.s3m",
+        },
+        {
+          name: "C.C.Catch - One Must Fall",
+          url: PUBLIC_URL + "/Music/games/omf2097.s3m",
+        },
+      ],
+    },
+    {
+      name: "DEMOSCENE",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/demoscene/shortest.mod",
+        },
+        {
+          name: "Moby - Fury Forest",
+          url: `${PUBLIC_URL}/Music/demoscene/furyforest.mod`,
+        },
+        {
+          name: "Firage - Galaxy Hero",
+          url: PUBLIC_URL + "/Music/demoscene/galaxyhero.mod",
+        },
+        {
+          name: "Michael - Open Your Heart",
+          url: PUBLIC_URL + "/Music/demoscene/heart.mod",
+        },
+        {
+          name: "Alien - Robocop III",
+          url: PUBLIC_URL + "/Music/demoscene/robocop3.xm",
+        },
+        {
+          name: "Moby - Fury Forest",
+          url: `${PUBLIC_URL}/Music/demoscene/furyforest.mod`,
+        },
+        {
+          name: "Firage - Galaxy Hero",
+          url: PUBLIC_URL + "/Music/demoscene/galaxyhero.mod",
+        },
+        {
+          name: "Michael - Open Your Heart",
+          url: PUBLIC_URL + "/Music/demoscene/heart.mod",
+        },
+        {
+          name: "Alien - Robocop III",
+          url: PUBLIC_URL + "/Music/demoscene/robocop3.xm",
+        },
+        {
+          name: "Moby - Fury Forest",
+          url: `${PUBLIC_URL}/Music/demoscene/furyforest.mod`,
+        },
+        {
+          name: "Firage - Galaxy Hero",
+          url: PUBLIC_URL + "/Music/demoscene/galaxyhero.mod",
+        },
+        {
+          name: "Michael - Open Your Heart",
+          url: PUBLIC_URL + "/Music/demoscene/heart.mod",
+        },
+        {
+          name: "Alien - Robocop III",
+          url: PUBLIC_URL + "/Music/demoscene/robocop3.xm",
+        },
+      ],
+    },
+    {
+      name: "KEYGEN",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/keygen/shortest.mod",
+        },
+        {
+          name: "Unknown - ST-Style",
+          url: PUBLIC_URL + "/Music/keygen/flcstst.xm",
+        },
+        { name: "Dubmood - Lucid", url: PUBLIC_URL + "/Music/keygen/lucid.xm" },
+        {
+          name: "FLC - Stargliders",
+          url: PUBLIC_URL + "/Music/keygen/stargliders.xm",
+        },
+        {
+          name: "Unknown - Your Dreams",
+          url: PUBLIC_URL + "/Music/keygen/yr-dreamz.xm",
+        },
+      ],
+    },
+    {
+      name: "POP",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/pop/shortest.mod",
+        },
+        {
+          name: "Unknown - Duck Dance II",
+          url: PUBLIC_URL + "/Music/pop/duckdance.it",
+        },
+        {
+          name: "DJ Mohax - Gazeta",
+          url: PUBLIC_URL + "/Music/pop/gazeta.mod",
+        },
+        {
+          name: "Siatek - I Love You",
+          url: PUBLIC_URL + "/Music/pop/iloveyou.it",
+        },
+        {
+          name: "Tenchi - POS 15",
+          url: PUBLIC_URL + "/Music/pop/pos15.it",
+        },
+      ],
+    },
+    {
+      name: "FUNK",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/funk/shortest.mod",
+        },
+        {
+          name: "Radix - Milk",
+          url: PUBLIC_URL + "/Music/funk/milk.xm",
+        },
+        {
+          name: "Dune - Last Train",
+          url: PUBLIC_URL + "/Music/funk/lasttrain.s3m",
+        },
+        {
+          name: "Virgill - Save My Dick",
+          url: PUBLIC_URL + "/Music/funk/savemydick.mod",
+        },
+        {
+          name: "RevisQ - Vincent's Car",
+          url: PUBLIC_URL + "/Music/funk/vincentcar.mod",
+        },
+      ],
+    },
+
+    {
+      name: "METAL",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/metal/shortest.mod",
+        },
+        {
+          name: "Subpacket - Command & Conqueror",
+          url: PUBLIC_URL + "/Music/metal/cckewl.xm",
+        },
+        {
+          name: "MrRoot - DieHard",
+          url: PUBLIC_URL + "/Music/metal/diehard.mod",
+        },
+        {
+          name: "Tarantula - A Journey In Time",
+          url: PUBLIC_URL + "/Music/metal/journey.it",
+        },
+        {
+          name: "Darkman007 - Metal World",
+          url: PUBLIC_URL + "/Music/metal/metalworld.it",
+        },
+      ],
+    },
+    {
+      name: "CHILLOUT",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/chillout/shortest.mod",
+        },
+        {
+          name: "Unknown - Three Legged Wookie",
+          url: PUBLIC_URL + "/Music/chillout/3legged.it",
+        },
+        {
+          name: "Radix - Check Yer Feet",
+          url: PUBLIC_URL + "/Music/chillout/checkyer.mod",
+        },
+        {
+          name: "Reed - The Laid Back Funk",
+          url: PUBLIC_URL + "/Music/chillout/laidback.mod",
+        },
+        {
+          name: "RevisQ - Trip To Remix",
+          url: PUBLIC_URL + "/Music/chillout/triptoremix.mod",
+        },
+      ],
+    },
+    {
+      name: "ELECTRONIC",
+      tracks: [
+        {
+          name: "Test - Shortest",
+          url: PUBLIC_URL + "/Music/electronic/shortest.mod",
+        },
+        {
+          name: "Adnan - Drilling",
+          url: PUBLIC_URL + "/Music/electronic/driling.it",
+        },
+        {
+          name: "Revisq - Fish, fish ... ",
+          url: PUBLIC_URL + "/Music/electronic/fish.mod",
+        },
+        {
+          name: "Unknown - I'am My Slave",
+          url: PUBLIC_URL + "/Music/electronic/slave.xm",
+        },
+        {
+          name: "Mobby - A Trip To Trance",
+          url: PUBLIC_URL + "/Music/electronic/trip.mod",
+        },
+      ],
+    },
+  ];
