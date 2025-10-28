@@ -1,5 +1,4 @@
 import React from "react";
-import "./buttons";
 
 const PlayIcon = () => (
   <svg
@@ -113,25 +112,39 @@ const LoopOnIcon = () => (
 
 // Rewind Button Icon
 const RewindIcon = () => (
-  <svg
-    version="1.1"
-    className="correction360px2"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 32 32"
-  >
-    <path d="M25,6v20L13,16L25,6z M7,16l12,10v-3.698L11.438,16L19,9.698V6L7,16z" />
+  // <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  //   <path d="M6 14H8L8 9L13 14H15L15 2H13L8 7L8 2H6L0 8L6 14Z" fill="#000000" />
+  // </svg>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M12 10.667l9.223-6.149a.5.5 0 0 1 .777.416v14.132a.5.5 0 0 1-.777.416L12 13.333v5.733a.5.5 0 0 1-.777.416L.624 12.416a.5.5 0 0 1 0-.832l10.599-7.066a.5.5 0 0 1 .777.416v5.733z" />
+    </g>
   </svg>
 );
 
 // Fast Forward Button Icon
 const FastForwardIcon = () => (
+  // <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  //   <path d="M3 14H1L1 2H3L8 7L8 2H10L16 8L10 14H8L8 9L3 14Z" fill="#000000" />
+  // </svg>
+
   <svg
     version="1.1"
-    className="correction360px2"
+    id="_x32_"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 32 32"
+    viewBox="0 0 512 512"
   >
-    <path d="M19,16L7,26V6L19,16z M13,6v3.698L20.562,16L13,22.302V26l12-10L13,6z" />
+    <g>
+      <path
+        class="st0"
+        d="M508.882,250.515L235.601,87.36c-1.952-1.142-4.438-1.215-6.462-0.049c-1.97,1.116-3.204,3.289-3.204,5.572
+		v123.61L9.646,87.36c-1.95-1.142-4.436-1.215-6.461-0.049C1.252,88.428,0,90.601,0,92.883v163.143v163.056
+		c0,2.357,1.252,4.492,3.185,5.586c2.025,1.19,4.511,1.116,6.461-0.025l216.289-129.132v123.572c0,2.357,1.234,4.492,3.204,5.586
+		c2.025,1.19,4.511,1.116,6.462-0.025l273.281-163.155c1.964-1.142,3.118-3.204,3.118-5.462
+		C512,253.755,510.846,251.62,508.882,250.515z"
+      />
+    </g>
   </svg>
 );
 

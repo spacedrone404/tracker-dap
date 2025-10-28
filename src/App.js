@@ -7,6 +7,7 @@ import BackdropPicker from "./components/BackdropPicker";
 import Equalizer from "./components/Equalizer";
 import ScrollTop from "./components/ScrollTop";
 import StarAnimation from "./components/StarAnimation";
+import TitleUpdater from "./components/TitleUpdater";
 import DimensionsDetector from "./components/DimensionsDetector";
 import {
   PlayIcon,
@@ -1226,6 +1227,12 @@ export default function App() {
         ))}
       </div>
       <div className="app flex crt-scanlines crt-colorsep">
+        <TitleUpdater
+          selectedPlaylist={selectedPlaylist}
+          currentTrackIndex={currentTrackIndex}
+          isPlaying={isPlaying}
+          appTitle={"TrackOrDie ■ 1994"}
+        />
         <div className="sticky-controls crt-scanlines crt-colorsep">
           <div className="controls-row">
             <div className="player-logo">
