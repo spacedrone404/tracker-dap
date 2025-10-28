@@ -1719,7 +1719,7 @@ html {
   }
   .correction360px2 {
     width: 288%;
-    transform: translate(-5px, 1px);
+    transform: translate(-6px, -3px);
   }
 
   .startup img.startup-image {
