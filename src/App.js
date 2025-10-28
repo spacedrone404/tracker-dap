@@ -18,7 +18,7 @@ import {
   ShuffleOnIcon,
   LoopOffIcon,
   LoopOnIcon,
-} from "./components/buttons";
+} from "./components/Buttons";
 
 import "./App.css";
 

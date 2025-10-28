@@ -17,8 +17,6 @@ export default function TitleUpdater({
       selectedPlaylist?.tracks?.[currentTrackIndex]?.name ?? null;
 
     if (trackName) {
-      // When playing: "Artist - Title — AppName"
-      // When paused: show "(paused)" so it's obvious in tab
       document.title = `${trackName}`;
     } else {
       // fallback to app title if no track is selected
