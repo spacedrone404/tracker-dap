@@ -12,8 +12,9 @@ html {
   border: none;
   outline: #00ff00 4px ridge;
   cursor: pointer;
-  padding: 20px;
+  padding: 10px;
   font-size: 30px;
+  padding-bottom: 12px;
   transition: all 0.8s ease-in-out;
   opacity: 0;
   filter: blur(28px);
@@ -38,4 +39,14 @@ html {
   opacity: 0;
   filter: blur(14px);
   pointer-events: none;
+}
+
+@media (min-width: 1280px) and (max-width: 4096px) {
+  .scroll-to-top {
+    position: fixed;
+    bottom: 0;
+    left: auto;
+    right: 90px;
+    margin-bottom: 50px;
+  }
 }
