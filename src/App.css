@@ -1726,10 +1726,10 @@ html {
     width: 288%;
     transform: translate(-5px, -3px);
   }
-  /* .correction360px2 {
+  .correction360px2 {
     width: 118% !important;
     transform: translate(-2px, 0) !important;
-  } */
+  }
 
   .startup .startup-image {
     animation: fadeInOut 3.4s ease-in-out,

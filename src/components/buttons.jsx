@@ -112,7 +112,12 @@ const LoopOnIcon = () => (
 
 // Rewind Button Icon
 const RewindIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    viewBox="0 0 16 16"
+    fill="none"
+    className="correction360px2"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path d="M6 14H8L8 9L13 14H15L15 2H13L8 7L8 2H6L0 8L6 14Z" fill="#000000" />
   </svg>
   // <svg
@@ -129,7 +134,12 @@ const RewindIcon = () => (
 
 // Fast Forward Button Icon
 const FastForwardIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    viewBox="0 0 16 16"
+    fill="none"
+    className="correction360px2"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path d="M3 14H1L1 2H3L8 7L8 2H10L16 8L10 14H8L8 9L3 14Z" fill="#000000" />
   </svg>
 
