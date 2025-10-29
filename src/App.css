@@ -1726,6 +1726,10 @@ html {
     width: 288%;
     transform: translate(-5px, -3px);
   }
+  .correction360px2 {
+    width: 88%;
+    /* transform: translate(0, -3px); */
+  }
 
   .startup .startup-image {
     animation: fadeInOut 3.4s ease-in-out,
@@ -2153,6 +2157,14 @@ html {
     width: 150%;
   }
 }
+
+@media (width >= 2048px) {
+  .introWrapper {
+    margin-top: 10px;
+    margin-left: 600px;
+  }
+}
+
 @media (width >= 2560px) {
   .left {
     transform: translateY(110px);
