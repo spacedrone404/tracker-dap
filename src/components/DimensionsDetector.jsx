@@ -79,20 +79,20 @@ const ViewportWidthIndicator = () => {
       style={{
         position: "fixed",
         bottom: "0",
-        left: "214px",
-        transform: "translate(-50%, 0)",
-        padding: "10px",
-        opacity: "64%",
+        left: "90px",
+        transform: "translate(-35%, 0)",
+        padding: "6px",
+        opacity: "94%",
         fontSize: "15px",
         color: "#FF0000",
         backgroundColor: "#FFF",
         outline: "2px solid red",
         textAlign: "center",
-        boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
+        boxShadow: "0 0 5px rgba(0, 0, 0, 0.28)",
         zIndex: 2100000,
       }}
     >
-      width: {width}px / height: {height}px
+      w: {width}px / h: {height}px
     </div>
   );
 };
