@@ -1727,8 +1727,8 @@ html {
     transform: translate(-5px, -3px);
   }
   .correction360px2 {
-    width: 88%;
-    /* transform: translate(0, -3px); */
+    width: 118% !important;
+    transform: translate(-2px, 0) !important;
   }
 
   .startup .startup-image {
