@@ -13,7 +13,7 @@ const ViewportWidthIndicator = () => {
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "flex-end",
-        opacity: "0.88",
+        opacity: "0.98",
       }}
     >
       <div
@@ -21,9 +21,8 @@ const ViewportWidthIndicator = () => {
           width: 0,
           height: 0,
           borderTop: "98px solid transparent",
-          borderRight: "98px solid rgba(255, 4, 0, 0.34)",
+          borderRight: "98px solid rgba(255, 4, 0, 0.48)",
           position: "relative",
-          boxShadow: "11px -10px 18px 4px rgba(12,249,230,0.2)",
           zIndex: 1,
         }}
       />
@@ -31,13 +30,15 @@ const ViewportWidthIndicator = () => {
       <div
         style={{
           position: "absolute",
-          top: "56px",
-          right: "4px",
+          top: "51px",
+          right: "0",
           transform: "rotate(-45deg)",
           fontSize: "14px",
           color: "#1ff",
           whiteSpace: "nowrap",
           textShadow: "-4px -2px 7px rgba(0,0,0,1)",
+          boxShadow: "33px 29px 13px -12px rgba(18,226,221,1) inset",
+          padding: "4px",
           zIndex: 2,
         }}
       >

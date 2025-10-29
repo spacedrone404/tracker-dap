@@ -1,9 +1,8 @@
-
 ![Ultimate web based tracker music player](https://trackerninja.codeberg.page/img/web-dap.png)
 
 Web music player of vintage tracker music is relying on [chiptune3.js](https://www.npmjs.com/package/chiptune3) and [openMPT](https://lib.openmpt.org/libopenmpt/download/) libraries
 <br>
-to handle such a large task to support so many music formats. 
+to handle such a large task to support so many music formats.
 
 <br>
 
@@ -16,6 +15,8 @@ to handle such a large task to support so many music formats.
 ► highly ergonomic, no-nonsense in terms of GUI
 
 ► shortcut support for better ergo
+
+► the browser's title shows the author and track name
 
 ► stylish startup screen and sound of lovely HDD seeking tracks
 
@@ -37,9 +38,8 @@ to handle such a large task to support so many music formats.
 
 ► TBD
 
-## Production environment: Windows 7 x64 ESU, Node.Js 23.7, Git 2.46.2, VS Codium 1.101, RedFox v143 
+## Production environment: Windows 7 x64 ESU, Node.Js 23.7, Git 2.46.2, VS Codium 1.101, RedFox v143
 
 Read more here:
 <br>
 https://trackerninja.codeberg.page/post/track-or-die-94-react-web-application-to-play-classic-tracker-music/
-
