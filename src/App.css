@@ -570,6 +570,7 @@ html {
   position: relative;
   text-shadow: -2px 26px 86px 17px rgba(255, 0, 0, 0.75);
   animation: logoTitleMobile 0.4s ease-in-out;
+  text-shadow: -2px 0 0 rgb(0, 183, 255), 2px 0 0 rgb(252, 2, 2);
 }
 
 @keyframes logoTitleMobile {
@@ -761,7 +762,7 @@ html {
   align-items: center;
   animation: fadeInOut 3.8s ease-in-out;
   outline: #ffffff 4px ridge;
-  box-shadow: -3px 48px 200px 73px rgba(255, 0, 0, 0.75);
+  box-shadow: -3px 48px 200px 73px rgba(255, 0, 0, 0.25);
   position: fixed;
   left: 0;
   bottom: 120px;
@@ -1055,21 +1056,13 @@ html {
   font-weight: bold;
 }
 
-/* CRT effect */
+
 .crt-scanlines::before {
   content: " ";
   display: block;
   position: fixed;
   inset: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-    linear-gradient(
-      90deg,
-      rgba(255, 0, 0, 0.06),
-      rgba(0, 255, 0, 0.02),
-      rgba(0, 0, 255, 0.06)
-    );
   /* z-index: 2; */
-  background-size: 100% 2px, 3px 100%;
   pointer-events: none;
 }
 

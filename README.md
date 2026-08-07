@@ -14,7 +14,7 @@ to handle such a large task to support so many music formats.
 
 ► convenient playlist support [loop & shuffle]
 
-► playlist support
+► playlist support, track rewind is finally working
 
 ► highly ergonomic, no-nonsense in terms of GUI
 

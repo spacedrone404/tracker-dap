@@ -184,8 +184,7 @@ const playlists = [
   {
     id: "games",
     name: "GAMES",
-    tracks: [
-      t("Test - Shortest", "games/shortest.mod"),
+    tracks: [      
       t("BaseHead - Crusader", "games/basehead.s3m"),
       t("Silent Mode - Eternity", "games/eternity.mod"),
       t("Alexander Brandon - Jazz The Jack Rabbit", "games/jazz.s3m"),
@@ -198,19 +197,10 @@ const playlists = [
     // the last four were repeated 3x in the original; kept verbatim, but note
     // that shuffle treats each repetition as a separate entry
     tracks: [
-      t("Test - Shortest", "demoscene/shortest.mod"),
       t("Moby - Fury Forest", "demoscene/furyforest.mod"),
       t("Firage - Galaxy Hero", "demoscene/galaxyhero.mod"),
       t("Michael - Open Your Heart", "demoscene/heart.mod"),
-      t("Alien - Robocop III", "demoscene/robocop3.xm"),
-      t("Moby - Fury Forest", "demoscene/furyforest.mod"),
-      t("Firage - Galaxy Hero", "demoscene/galaxyhero.mod"),
-      t("Michael - Open Your Heart", "demoscene/heart.mod"),
-      t("Alien - Robocop III", "demoscene/robocop3.xm"),
-      t("Moby - Fury Forest", "demoscene/furyforest.mod"),
-      t("Firage - Galaxy Hero", "demoscene/galaxyhero.mod"),
-      t("Michael - Open Your Heart", "demoscene/heart.mod"),
-      t("Alien - Robocop III", "demoscene/robocop3.xm"),
+      t("Alien - Robocop III", "demoscene/robocop3.xm"),      
     ],
   },
   {
@@ -228,7 +218,6 @@ const playlists = [
     id: "pop",
     name: "POP",
     tracks: [
-      t("Test - Shortest", "pop/shortest.mod"),
       t("Unknown - Duck Dance II", "pop/duckdance.it"),
       t("DJ Mohax - Gazeta", "pop/gazeta.mod"),
       t("Siatek - I Love You", "pop/iloveyou.it"),
@@ -239,7 +228,6 @@ const playlists = [
     id: "funk",
     name: "FUNK",
     tracks: [
-      t("Test - Shortest", "funk/shortest.mod"),
       t("Radix - Milk", "funk/milk.xm"),
       t("Dune - Last Train", "funk/lasttrain.s3m"),
       t("Virgill - Save My Dick", "funk/savemydick.mod"),
@@ -250,7 +238,6 @@ const playlists = [
     id: "metal",
     name: "METAL",
     tracks: [
-      t("Test - Shortest", "metal/shortest.mod"),
       t("Subpacket - Command & Conqueror", "metal/cckewl.xm"),
       t("MrRoot - DieHard", "metal/diehard.mod"),
       t("Tarantula - A Journey In Time", "metal/journey.it"),
@@ -261,7 +248,6 @@ const playlists = [
     id: "chillout",
     name: "CHILLOUT",
     tracks: [
-      t("Test - Shortest", "chillout/shortest.mod"),
       t("Unknown - Three Legged Wookie", "chillout/3legged.it"),
       t("Radix - Check Yer Feet", "chillout/checkyer.mod"),
       t("Reed - The Laid Back Funk", "chillout/laidback.mod"),
@@ -271,8 +257,7 @@ const playlists = [
   {
     id: "electronic",
     name: "ELECTRONIC",
-    tracks: [
-      t("Test - Shortest", "electronic/shortest.mod"),
+    tracks: [      
       t("Adnan - Drilling", "electronic/driling.it"),
       t("Revisq - Fish, fish ... ", "electronic/fish.mod"),
       t("Unknown - I'am My Slave", "electronic/slave.xm"),
