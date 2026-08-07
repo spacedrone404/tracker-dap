@@ -1066,7 +1066,7 @@ export default function App() {
                 <p className="introDescription5">
                   Startup sound: Neo Geo CD startup jingle
                   <br />
-                  Code: Windows 7 x64 ESU, NodeJs 23, VsCode 1.100, RedFox 143
+                  Code: Windows 7 x64 ESU, NodeJs 23, VsCode 1.100, RedFox 153
                 </p>
                 <p className="introDescription6">
                   Startup illustration and audio design:
