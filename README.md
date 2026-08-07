@@ -6,13 +6,15 @@ to handle such a large task to support so many music formats.
 
 <br>
 
-> Sequential playback is finally fixed
+> Sequential playback of playlist is finally fixed
 
 # ESSENTIAL FEATURES
 
 ► the most raddest tracker music on the entire interwebs
 
 ► convenient playlist support [loop & shuffle]
+
+► playlist support
 
 ► highly ergonomic, no-nonsense in terms of GUI
 
@@ -33,8 +35,6 @@ to handle such a large task to support so many music formats.
 <br>
 
 # THINGS TODO
-
-► full playlist support
 
 ► …. stuff …. stuff …. stufff
 
