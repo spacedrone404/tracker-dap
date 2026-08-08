@@ -269,7 +269,7 @@ html {
 
 .startup-image {
   max-width: 60%;
-  max-height: 60%;
+  max-height: 40%;
   animation: fadeInOut 3.8s ease-in-out,
     scalePlus 0.8s ease-in-out alternate infinite;
   outline: #f10ce0 4px ridge;
@@ -1321,10 +1321,11 @@ html {
     color: white;
     margin: 6px;
     width: fit-content;
-    outline: 2px #ff0000 groove;
+    outline: 4px #ff0000 groove;
     padding: 4px;
     margin-left: 12px;
     margin-right: 12px;
+    text-decoration-thickness: 4px;
   }
 
   .flyout-trigger,
@@ -1788,10 +1789,11 @@ html {
     color: white;
     margin: 6px;
     width: fit-content;
-    outline: 2px #ff0000 groove;
+    outline: 4px #ff0000 groove;
     padding: 4px;
     margin-left: 12px;
     margin-right: 12px;
+    text-decoration-thickness: 4px;
   }
 
   .flyout-trigger,
@@ -1848,8 +1850,8 @@ html {
     display: flex;
     /* outline: 40px red groove !important; */
     position: absolute;
-    top: -160px;
-    left: 6px;
+    top: 17px;
+    left: 14px;
     z-index: 2147483647 !important;
   }
 
@@ -1932,7 +1934,7 @@ html {
     flex-direction: row;
     gap: 6px;
     align-items: center;
-    margin-left: calc(100vw - 55%);
+    margin-left: calc(100vw - 62%);
   }
 
   .logo-text {
