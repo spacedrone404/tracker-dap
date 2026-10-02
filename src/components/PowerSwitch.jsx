@@ -67,7 +67,7 @@ function PowerSwitchInner(props, ref) {
 
   const continueAfterSound = () => {
     try {
-      window.open("https://google.com", "_blank", "noopener,noreferrer");
+      window.open("https://trackerninja.codeberg.page", "_blank", "noopener,noreferrer");
     } catch (e) {}
     tryCloseWindow();
   };
